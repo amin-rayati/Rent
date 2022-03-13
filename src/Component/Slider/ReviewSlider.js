@@ -110,9 +110,9 @@ export default function Carousel2() {
                     <img src={user1} class='img-fluid' alt='' />
                   </div>
                   <div class='_tsl_flex_capst'>
-                    <h5>Susan D. Murphy</h5>
+                    <h5>پارسا</h5>
                     <div class='_ovr_posts'>
-                      <span>CEO, Leader</span>
+                      <span>لیدر</span>
                     </div>
                     <div class='_ovr_rates'>
                       <span>
@@ -130,11 +130,7 @@ export default function Carousel2() {
               </div>
 
               <div class='facts-detail'>
-                <p>
-                  Faucibus tristique felis potenti ultrices ornare rhoncus
-                  semper hac facilisi Rutrum tellus lorem sem velit nisi non
-                  pharetra in dui.
-                </p>
+                <p>بسیار عالی و خوب و مناسب برای خانواده</p>
               </div>
             </div>
           </div>
@@ -150,9 +146,9 @@ export default function Carousel2() {
                     <img src={user1} class='img-fluid' alt='' />
                   </div>
                   <div class='_tsl_flex_capst'>
-                    <h5>Susan D. Murphy</h5>
+                    <h5>پارسا</h5>
                     <div class='_ovr_posts'>
-                      <span>CEO, Leader</span>
+                      <span>لیدر</span>
                     </div>
                     <div class='_ovr_rates'>
                       <span>
@@ -164,22 +160,18 @@ export default function Carousel2() {
                 </div>
                 <div class='_testimonial_flex_first_last'>
                   <div class='_tsl_flex_thumb'>
-                    <img src={c2} class='img-fluid' alt='' />
+                    <img src={c1} class='img-fluid' alt='' />
                   </div>
                 </div>
               </div>
 
               <div class='facts-detail'>
-                <p>
-                  Faucibus tristique felis potenti ultrices ornare rhoncus
-                  semper hac facilisi Rutrum tellus lorem sem velit nisi non
-                  pharetra in dui.
-                </p>
+                <p>بسیار عالی و خوب و مناسب برای خانواده</p>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div>{' '}
       <div>
         <div class='item-slide space' style={{ width: '98%' }}>
           <div class='single_items'>
@@ -190,9 +182,9 @@ export default function Carousel2() {
                     <img src={user1} class='img-fluid' alt='' />
                   </div>
                   <div class='_tsl_flex_capst'>
-                    <h5>Susan D. Murphy</h5>
+                    <h5>پارسا</h5>
                     <div class='_ovr_posts'>
-                      <span>CEO, Leader</span>
+                      <span>لیدر</span>
                     </div>
                     <div class='_ovr_rates'>
                       <span>
@@ -204,22 +196,18 @@ export default function Carousel2() {
                 </div>
                 <div class='_testimonial_flex_first_last'>
                   <div class='_tsl_flex_thumb'>
-                    <img src={c3} class='img-fluid' alt='' />
+                    <img src={c1} class='img-fluid' alt='' />
                   </div>
                 </div>
               </div>
 
               <div class='facts-detail'>
-                <p>
-                  Faucibus tristique felis potenti ultrices ornare rhoncus
-                  semper hac facilisi Rutrum tellus lorem sem velit nisi non
-                  pharetra in dui.
-                </p>
+                <p>بسیار عالی و خوب و مناسب برای خانواده</p>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </div>{' '}
       <div>
         <div class='item-slide space' style={{ width: '98%' }}>
           <div class='single_items'>
@@ -230,9 +218,9 @@ export default function Carousel2() {
                     <img src={user1} class='img-fluid' alt='' />
                   </div>
                   <div class='_tsl_flex_capst'>
-                    <h5>Susan D. Murphy</h5>
+                    <h5>پارسا</h5>
                     <div class='_ovr_posts'>
-                      <span>CEO, Leader</span>
+                      <span>لیدر</span>
                     </div>
                     <div class='_ovr_rates'>
                       <span>
@@ -244,17 +232,49 @@ export default function Carousel2() {
                 </div>
                 <div class='_testimonial_flex_first_last'>
                   <div class='_tsl_flex_thumb'>
-                    <img src={c4} class='img-fluid' alt='' />
+                    <img src={c1} class='img-fluid' alt='' />
                   </div>
                 </div>
               </div>
 
               <div class='facts-detail'>
-                <p>
-                  Faucibus tristique felis potenti ultrices ornare rhoncus
-                  semper hac facilisi Rutrum tellus lorem sem velit nisi non
-                  pharetra in dui.
-                </p>
+                <p>بسیار عالی و خوب و مناسب برای خانواده</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>{' '}
+      <div>
+        <div class='item-slide space' style={{ width: '98%' }}>
+          <div class='single_items'>
+            <div class='_testimonial_wrios'>
+              <div class='_testimonial_flex'>
+                <div class='_testimonial_flex_first'>
+                  <div class='_tsl_flex_thumb'>
+                    <img src={user1} class='img-fluid' alt='' />
+                  </div>
+                  <div class='_tsl_flex_capst'>
+                    <h5>پارسا</h5>
+                    <div class='_ovr_posts'>
+                      <span>لیدر</span>
+                    </div>
+                    <div class='_ovr_rates'>
+                      <span>
+                        <AiFillStar />
+                      </span>
+                      4.7
+                    </div>
+                  </div>
+                </div>
+                <div class='_testimonial_flex_first_last'>
+                  <div class='_tsl_flex_thumb'>
+                    <img src={c1} class='img-fluid' alt='' />
+                  </div>
+                </div>
+              </div>
+
+              <div class='facts-detail'>
+                <p>بسیار عالی و خوب و مناسب برای خانواده</p>
               </div>
             </div>
           </div>

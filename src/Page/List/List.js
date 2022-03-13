@@ -6,12 +6,11 @@ import { Link, NavLink } from 'react-router-dom'
 
 const List = () => {
   const aquaticCreatures = [
-    { label: 'Shark', value: 'Shark' },
-    { label: 'Dolphin', value: 'Dolphin' },
-    { label: 'Whale', value: 'Whale' },
-    { label: 'Octopus', value: 'Octopus' },
-    { label: 'Crab', value: 'Crab' },
-    { label: 'Lobster', value: 'Lobster' },
+    { label: 'بهشتی', value: 'بهشتی' },
+    { label: 'طالقانی', value: 'طالقانی' },
+    { label: 'شهدا', value: 'شهدا' },
+    { label: 'باغستان', value: 'باغستان' },
+    { label: 'شاهین ویلا', value: 'شاهین ویلا' },
   ]
 
   const [grid, setGrid] = useState(false)
@@ -30,9 +29,11 @@ const List = () => {
                       }}
                       class='list-inline-item'
                     >
-                      <a>
-                        <span class='ti-layout-grid2'></span>Grid
-                      </a>
+                      <span
+                        style={{ cursor: 'pointer' }}
+                        class='ti-layout-grid2'
+                      ></span>
+                      گرید
                     </li>
                     <li
                       onClick={() => {
@@ -40,18 +41,17 @@ const List = () => {
                       }}
                       class='list-inline-item'
                     >
-                      <a>
-                        <span class='ti-view-list'></span>List
-                      </a>
+                      <span
+                        style={{ cursor: 'pointer' }}
+                        class='ti-view-list'
+                      ></span>
+                      لیست
                     </li>
                   </ul>
                 </div>
 
                 <div class='col-lg-6 col-md-12 col-sm-12 order-lg-2 order-md-3 elco_bor col-sm-12'>
                   <div class='shorting_pagination'>
-                    <div class='shorting_pagination_laft'>
-                      <h5>Showing 1-25 of 72 results</h5>
-                    </div>
                     <div class='shorting_pagination_right'>
                       <ul>
                         <li>
@@ -76,37 +76,25 @@ const List = () => {
                         </li>
                       </ul>
                     </div>
+                    <div class='shorting_pagination_laft text-right'>
+                      <h5>نمایش 10 از بین 100</h5>
+                    </div>
                   </div>
                 </div>
 
                 <div class='col-lg-3 col-md-6 col-sm-12 order-lg-3 order-md-2 col-sm-6'>
-                  <div class='shorting-right'>
-                    <label>Short By:</label>
+                  <div
+                    class='shorting-right'
+                    style={{ justifyContent: 'space-between' }}
+                  >
                     <div class='dropdown show'>
-                      <a
-                        class='btn btn-filter dropdown-toggle'
-                        href='grid-layout-with-sidebar.html#'
-                        data-toggle='dropdown'
-                        aria-haspopup='true'
-                        aria-expanded='false'
-                      >
-                        <span class='selection'>Most Rated</span>
-                      </a>
-                      <div class='drp-select dropdown-menu'>
-                        <a class='dropdown-item' href='JavaScript:Void(0);'>
-                          Most Rated
-                        </a>
-                        <a class='dropdown-item' href='JavaScript:Void(0);'>
-                          Most Viewd
-                        </a>
-                        <a class='dropdown-item' href='JavaScript:Void(0);'>
-                          News Listings
-                        </a>
-                        <a class='dropdown-item' href='JavaScript:Void(0);'>
-                          High Rated
-                        </a>
-                      </div>
+                      <select style={{ border: '1px solid gray' }}>
+                        <option>گرانترین</option>
+                        <option>ارزانترین</option>
+                        <option>جدیدترین</option>
+                      </select>
                     </div>
+                    <label>مرتب سازی بر اساس</label>
                   </div>
                 </div>
               </div>
@@ -122,7 +110,7 @@ const List = () => {
                   {/* <!-- Single Property --> */}
                   <Link to='/search/1' class='col-lg-6 col-md-6 col-sm-12'>
                     <div>
-                      <div class='property-listing property-2'>
+                      <div class='property-listing property-2 text-right'>
                         <div class='listing-img-wrapper'>
                           <div class='_exlio_125'>برای اجاره</div>
                           <div class='list-img-slide'>
@@ -163,13 +151,13 @@ const List = () => {
                             <div class='_card_list_flex mb-2'>
                               <div class='_card_flex_01'>
                                 <span class='_list_blickes _netork'>
-                                  4 Network
+                                  4 شبکه
                                 </span>
-                                <span class='_list_blickes types'>Condos</span>
+                                <span class='_list_blickes types'>ویلایی</span>
                               </div>
                               <div class='_card_flex_last'>
                                 <h6 class='listing-card-info-price mb-0'>
-                                  $6,700
+                                  تومان 6,700
                                 </h6>
                               </div>
                             </div>
@@ -180,8 +168,7 @@ const List = () => {
                                     href='single-property-1.html'
                                     class='prt-link-detail'
                                   >
-                                    7012 Shine Sehu Street, Liverpool London,
-                                    LC345AC
+                                    کرج دهقان ویلای دوم
                                   </a>
                                 </h4>
                               </div>
@@ -199,7 +186,7 @@ const List = () => {
                                   alt=''
                                 />
                               </div>
-                              4 Beds
+                              4 خواب
                             </div>
                             <div class='listing-card-info-icon'>
                               <div class='inc-fleat-icon'>
@@ -209,7 +196,7 @@ const List = () => {
                                   alt=''
                                 />
                               </div>
-                              2 Bath
+                              2 حمام
                             </div>
                             <div class='listing-card-info-icon'>
                               <div class='inc-fleat-icon'>
@@ -219,7 +206,7 @@ const List = () => {
                                   alt=''
                                 />
                               </div>
-                              820 sqft
+                              820 متر
                             </div>
                           </div>
                         </div>
@@ -228,7 +215,7 @@ const List = () => {
                           <div class='footer-first'>
                             <div class='foot-location'>
                               <img src='assets/img/pin.svg' width='18' alt='' />
-                              Montreal, Canada
+                              کرج گلشهر
                             </div>
                           </div>
                           <div class='footer-flex'>
@@ -246,19 +233,6 @@ const List = () => {
                                   </label>
                                 </div>
                               </li>
-
-                              <li>
-                                <div class='prt_saveed_12lk'>
-                                  <a
-                                    href='single-property-1.html'
-                                    data-toggle='tooltip'
-                                    data-placement='top'
-                                    data-original-title='View Property'
-                                  >
-                                    <AiOutlineArrowRight />
-                                  </a>
-                                </div>
-                              </li>
                             </ul>
                           </div>
                         </div>
@@ -271,16 +245,19 @@ const List = () => {
               </div>
             ) : (
               <div class='col-lg-8 order-lg-1 col-md-12 order-md-2 col-sm-12 order-sm-2 col-12 order-2'>
-                <div class='row justify-content-center'>
+                <div
+                  class='row justify-content-center'
+                  style={{ justifyContent: 'right' }}
+                >
                   {/* <!-- Single Property --> */}
                   <Link
                     to='/search/1'
                     class='col-xl-12 col-lg-12 col-md-12 col-sm-12'
                   >
                     <div>
-                      <div class='property-listing list_view'>
+                      <div class='property-listing list_view text-right'>
                         <div class='listing-img-wrapper'>
-                          <div class='_exlio_125'>For Sale</div>
+                          <div class='_exlio_125'>اجاره </div>
                           <div class='list-img-slide'>
                             <div class='click'>
                               <div>
@@ -320,15 +297,15 @@ const List = () => {
                               <div class='_card_list_flex mb-2'>
                                 <div class='_card_flex_01'>
                                   <span class='_list_blickes _netork'>
-                                    6 Network
+                                    6 شبکه
                                   </span>
                                   <span class='_list_blickes types'>
-                                    Family
+                                    خانواده
                                   </span>
                                 </div>
                                 <div class='_card_flex_last'>
                                   <h6 class='listing-card-info-price mb-0'>
-                                    $7,000
+                                    تومان 7,000
                                   </h6>
                                 </div>
                               </div>
@@ -339,8 +316,7 @@ const List = () => {
                                       href='single-property-1.html'
                                       class='prt-link-detail'
                                     >
-                                      5689 Resot Relly Market, Montreal Canada,
-                                      HAQC445
+                                      عظیمیه میدان گلستان گلستان 12
                                     </a>
                                   </h4>
                                 </div>
@@ -358,7 +334,7 @@ const List = () => {
                                     alt=''
                                   />
                                 </div>
-                                3 Beds
+                                3 خواب
                               </div>
                               <div class='listing-card-info-icon'>
                                 <div class='inc-fleat-icon'>
@@ -368,7 +344,7 @@ const List = () => {
                                     alt=''
                                   />
                                 </div>
-                                1 Bath
+                                1 حمام
                               </div>
                               <div class='listing-card-info-icon'>
                                 <div class='inc-fleat-icon'>
@@ -378,7 +354,7 @@ const List = () => {
                                     alt=''
                                   />
                                 </div>
-                                800 sqft
+                                100 متر
                               </div>
                             </div>
                           </div>
@@ -398,7 +374,7 @@ const List = () => {
                             </div>
                             <div class='footer-flex'>
                               <a href='single-property-1.html' class='prt-view'>
-                                View Detail
+                                جزیات
                               </a>
                             </div>
                           </div>
@@ -422,7 +398,7 @@ const List = () => {
                         <input
                           type='text'
                           class='form-control'
-                          placeholder='Neighborhood'
+                          placeholder='محله'
                         />
                         <i class='ti-search'></i>
                       </div>
@@ -433,15 +409,19 @@ const List = () => {
                         <input
                           type='text'
                           class='form-control'
-                          placeholder='Location'
+                          placeholder='منطقه'
                         />
                         <i class='ti-location-pin'></i>
                       </div>
                     </div>
 
                     <div class='form-group'>
-                      <div class='simple-input'>
+                      <div
+                        class='simple-input'
+                        style={{ justifyContent: 'right' }}
+                      >
                         <Select
+                          placeholder='منطقه'
                           style={{ zIndex: '999' }}
                           options={aquaticCreatures}
                         />
@@ -449,55 +429,79 @@ const List = () => {
                     </div>
 
                     <div class='form-group'>
-                      <div class='simple-input'>
+                      <div
+                        class='simple-input'
+                        style={{ justifyContent: 'right' }}
+                      >
                         <Select
                           style={{ zIndex: '999' }}
                           options={aquaticCreatures}
+                          placeholder='منطقه'
                         />
                       </div>
                     </div>
 
                     <div class='form-group'>
-                      <div class='simple-input'>
+                      <div
+                        class='simple-input'
+                        style={{ justifyContent: 'right' }}
+                      >
                         <Select
                           style={{ zIndex: '999' }}
                           options={aquaticCreatures}
+                          placeholder='منطقه'
                         />
                       </div>
                     </div>
 
                     <div class='form-group'>
-                      <div class='simple-input'>
+                      <div
+                        class='simple-input'
+                        style={{ justifyContent: 'right' }}
+                      >
                         <Select
                           style={{ zIndex: '999' }}
                           options={aquaticCreatures}
+                          placeholder='منطقه'
                         />
                       </div>
                     </div>
 
                     <div class='form-group'>
-                      <div class='simple-input'>
+                      <div
+                        class='simple-input'
+                        style={{ justifyContent: 'right' }}
+                      >
                         <Select
                           style={{ zIndex: '999' }}
                           options={aquaticCreatures}
+                          placeholder='منطقه'
                         />
                       </div>
                     </div>
 
                     <div class='form-group'>
-                      <div class='simple-input'>
+                      <div
+                        class='simple-input'
+                        style={{ justifyContent: 'right' }}
+                      >
                         <Select
                           style={{ zIndex: '999' }}
                           options={aquaticCreatures}
+                          placeholder='منطقه'
                         />
                       </div>
                     </div>
 
                     <div class='form-group'>
-                      <div class='simple-input'>
+                      <div
+                        class='simple-input'
+                        style={{ justifyContent: 'right' }}
+                      >
                         <Select
                           style={{ zIndex: '999' }}
                           options={aquaticCreatures}
+                          placeholder='منطقه'
                         />
                       </div>
                     </div>
@@ -505,22 +509,28 @@ const List = () => {
                     <div class='row'>
                       <div class='col-lg-6 col-md-6 col-sm-6'>
                         <div class='form-group'>
-                          <div class='simple-input'>
+                          <div
+                            class='simple-input'
+                            style={{ justifyContent: 'right' }}
+                          >
                             <input
                               type='text'
                               class='form-control'
-                              placeholder='Min Area'
+                              placeholder='حداقل متراژ'
                             />
                           </div>
                         </div>
                       </div>
                       <div class='col-lg-6 col-md-6 col-sm-6'>
                         <div class='form-group'>
-                          <div class='simple-input'>
+                          <div
+                            class='simple-input'
+                            style={{ justifyContent: 'right' }}
+                          >
                             <input
                               type='text'
                               class='form-control'
-                              placeholder='Max Area'
+                              placeholder='حداکثر متراژ'
                             />
                           </div>
                         </div>
@@ -528,8 +538,8 @@ const List = () => {
                     </div>
 
                     <div class='row'>
-                      <div class='col-lg-12 col-md-12 col-sm-12 pt-4'>
-                        <h6>Advance Features</h6>
+                      <div class='col-lg-12 col-md-12 col-sm-12 pt-4 text-right'>
+                        <h6>امکانات ویژه</h6>
                         <ul class='row p-0 m-0'>
                           <li class='col-lg-6 col-md-6 p-0'>
                             <input
@@ -539,7 +549,7 @@ const List = () => {
                               type='checkbox'
                             />
                             <label for='a-1' class='checkbox-custom-label'>
-                              Air Condition
+                              کولر
                             </label>
                           </li>
                           <li class='col-lg-6 col-md-6 p-0'>
@@ -550,7 +560,7 @@ const List = () => {
                               type='checkbox'
                             />
                             <label for='a-2' class='checkbox-custom-label'>
-                              Bedding
+                              اتاق خواب
                             </label>
                           </li>
                           <li class='col-lg-6 col-md-6 p-0'>
@@ -561,7 +571,7 @@ const List = () => {
                               type='checkbox'
                             />
                             <label for='a-3' class='checkbox-custom-label'>
-                              Heating
+                              گرمایش
                             </label>
                           </li>
                           <li class='col-lg-6 col-md-6 p-0'>
@@ -572,7 +582,7 @@ const List = () => {
                               type='checkbox'
                             />
                             <label for='a-4' class='checkbox-custom-label'>
-                              Internet
+                              اینترنت
                             </label>
                           </li>
                           <li class='col-lg-6 col-md-6 p-0'>
@@ -583,7 +593,7 @@ const List = () => {
                               type='checkbox'
                             />
                             <label for='a-5' class='checkbox-custom-label'>
-                              Microwave
+                              ماکروفر
                             </label>
                           </li>
                           <li class='col-lg-6 col-md-6 p-0'>
@@ -594,7 +604,7 @@ const List = () => {
                               type='checkbox'
                             />
                             <label for='a-6' class='checkbox-custom-label'>
-                              Smoking Allow
+                              سیگار کشیدن
                             </label>
                           </li>
                           <li class='col-lg-6 col-md-6 p-0'>
@@ -605,7 +615,7 @@ const List = () => {
                               type='checkbox'
                             />
                             <label for='a-7' class='checkbox-custom-label'>
-                              Terrace
+                              تراس
                             </label>
                           </li>
                           <li class='col-lg-6 col-md-6 p-0'>
@@ -616,18 +626,7 @@ const List = () => {
                               type='checkbox'
                             />
                             <label for='a-8' class='checkbox-custom-label'>
-                              Balcony
-                            </label>
-                          </li>
-                          <li class='col-lg-6 col-md-6 p-0'>
-                            <input
-                              id='a-9'
-                              class='checkbox-custom'
-                              name='a-9'
-                              type='checkbox'
-                            />
-                            <label for='a-9' class='checkbox-custom-label'>
-                              Icon
+                              بالکن
                             </label>
                           </li>
                         </ul>
@@ -637,7 +636,7 @@ const List = () => {
                     <div class='row'>
                       <div class='col-lg-12 col-md-12 col-sm-12 pt-4'>
                         <button class='btn theme-bg rounded full-width'>
-                          Find New Home
+                          خونه جدید پیدا کن
                         </button>
                       </div>
                     </div>

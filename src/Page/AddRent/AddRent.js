@@ -3,12 +3,11 @@ import Select from 'react-select'
 
 const AddRent = () => {
   const aquaticCreatures = [
-    { label: 'Shark', value: 'Shark' },
-    { label: 'Dolphin', value: 'Dolphin' },
-    { label: 'Whale', value: 'Whale' },
-    { label: 'Octopus', value: 'Octopus' },
-    { label: 'Crab', value: 'Crab' },
-    { label: 'Lobster', value: 'Lobster' },
+    { label: 'بهشتی', value: 'بهشتی' },
+    { label: 'طالقانی', value: 'طالقانی' },
+    { label: 'شهدا', value: 'شهدا' },
+    { label: 'باغستان', value: 'باغستان' },
+    { label: 'شاهین ویلا', value: 'شاهین ویلا' },
   ]
   return (
     <div id='main-wrapper'>
@@ -20,13 +19,13 @@ const AddRent = () => {
         <div class='container'>
           <div class='row'>
             <div class='col-lg-12 col-md-12'>
-              <div class='breadcrumbs-wrap'>
-                <ol class='breadcrumb'>
-                  <li class='breadcrumb-item ' aria-current='page'>
-                    Submit Property
+              <div class='breadcrumbs-wrap text-right'>
+                <ol class='breadcrumb text-right'>
+                  <li class=' text-right ' aria-current='page'>
+                    افزودن ملک
                   </li>
                 </ol>
-                <h2 class='breadcrumb-title'>Submit Your Property</h2>
+                <h2 class='breadcrumb-title'>موارد خود را اضافه کنید</h2>
               </div>
             </div>
           </div>
@@ -38,21 +37,21 @@ const AddRent = () => {
             <div class='col-lg-12 col-md-12'>
               <div class='alert alert-info' role='alert'>
                 <p>
-                  If you don't have an account you can create one by{' '}
-                  <a href='submit-property.html#'>Click Here</a>
+                  اگر در سایت ثبت نام نکردید اینجا کلیک کنید
+                  <a href='submit-property.html#'>ثبت نام</a>
                 </p>
               </div>
             </div>
 
-            <div class='col-lg-12 col-md-12'>
+            <div class='col-lg-12 col-md-12 text-right'>
               <div class='submit-page p-0'>
                 <div class='frm_submit_block'>
-                  <h3>Basic Information</h3>
+                  <h3>اطلاعات پایه</h3>
                   <div class='frm_submit_wrap'>
                     <div class='form-row'>
                       <div class='form-group col-md-12'>
                         <label>
-                          Property Title
+                          لیست موارد
                           <a
                             href='submit-property.html#'
                             class='tip-topdata'
@@ -65,7 +64,7 @@ const AddRent = () => {
                       </div>
 
                       <div class='form-group col-md-6'>
-                        <label>Status</label>
+                        <label>وضعیت</label>
                         <Select
                           style={{ zIndex: '999' }}
                           options={aquaticCreatures}
@@ -73,7 +72,7 @@ const AddRent = () => {
                       </div>
 
                       <div class='form-group col-md-6'>
-                        <label>Property Type</label>
+                        <label>نوع موارد</label>
                         <Select
                           style={{ zIndex: '999' }}
                           options={aquaticCreatures}
@@ -81,7 +80,7 @@ const AddRent = () => {
                       </div>
 
                       <div class='form-group col-md-6'>
-                        <label>Price</label>
+                        <label>قیمت</label>
                         <input
                           type='text'
                           class='form-control'
@@ -90,12 +89,12 @@ const AddRent = () => {
                       </div>
 
                       <div class='form-group col-md-6'>
-                        <label>Area</label>
+                        <label>فضا</label>
                         <input type='text' class='form-control' />
                       </div>
 
                       <div class='form-group col-md-6'>
-                        <label>Bedrooms</label>
+                        <label>اتاق خواب</label>
                         <Select
                           style={{ zIndex: '999' }}
                           options={aquaticCreatures}
@@ -103,7 +102,7 @@ const AddRent = () => {
                       </div>
 
                       <div class='form-group col-md-6'>
-                        <label>Bathrooms</label>
+                        <label>حمام</label>
                         <Select
                           style={{ zIndex: '999' }}
                           options={aquaticCreatures}
@@ -114,46 +113,20 @@ const AddRent = () => {
                 </div>
 
                 <div class='frm_submit_block'>
-                  <h3>Gallery</h3>
-                  <div class='frm_submit_wrap'>
-                    <div class='form-row'>
-                      <div class='form-group col-md-12'>
-                        <label>Upload Gallery</label>
-                        <form
-                          action='https://LoopCode.net/upload-target'
-                          class='dropzone dz-clickable primary-dropzone'
-                        >
-                          <div class='dz-default dz-message'>
-                            <i class='ti-gallery'></i>
-                            <span>Drag & Drop To Change Logo</span>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class='frm_submit_block'>
-                  <h3>Location</h3>
+                  <h3>منطقه</h3>
                   <div class='frm_submit_wrap'>
                     <div class='form-row'>
                       <div class='form-group col-md-6'>
-                        <label>Address</label>
+                        <label>شهر</label>
+                        <input type='text' class='form-control' />
+                      </div>
+                      <div class='form-group col-md-6'>
+                        <label>استان</label>
                         <input type='text' class='form-control' />
                       </div>
 
                       <div class='form-group col-md-6'>
-                        <label>City</label>
-                        <input type='text' class='form-control' />
-                      </div>
-
-                      <div class='form-group col-md-6'>
-                        <label>State</label>
-                        <input type='text' class='form-control' />
-                      </div>
-
-                      <div class='form-group col-md-6'>
-                        <label>Zip Code</label>
+                        <label>آدرس</label>
                         <input type='text' class='form-control' />
                       </div>
                     </div>
@@ -161,16 +134,16 @@ const AddRent = () => {
                 </div>
 
                 <div class='frm_submit_block'>
-                  <h3>Detailed Information</h3>
+                  <h3>جزئیات</h3>
                   <div class='frm_submit_wrap'>
                     <div class='form-row'>
                       <div class='form-group col-md-12'>
-                        <label>Description</label>
+                        <label>توضیحات</label>
                         <textarea class='form-control h-120'></textarea>
                       </div>
 
                       <div class='form-group col-md-4'>
-                        <label>Building Age (optional)</label>
+                        <label>سال ساخت</label>
                         <Select
                           style={{ zIndex: '999' }}
                           options={aquaticCreatures}
@@ -178,7 +151,7 @@ const AddRent = () => {
                       </div>
 
                       <div class='form-group col-md-4'>
-                        <label>Garage (optional)</label>
+                        <label>پارکینگ</label>
                         <Select
                           style={{ zIndex: '999' }}
                           options={aquaticCreatures}
@@ -186,7 +159,7 @@ const AddRent = () => {
                       </div>
 
                       <div class='form-group col-md-4'>
-                        <label>Rooms (optional)</label>
+                        <label>اتاق ها</label>
                         <Select
                           style={{ zIndex: '999' }}
                           options={aquaticCreatures}
@@ -194,7 +167,7 @@ const AddRent = () => {
                       </div>
 
                       <div class='form-group col-md-12'>
-                        <label>Other Features (optional)</label>
+                        <label>امکانات دیگر</label>
                         <div class='o-features'>
                           <ul class='no-ul-list third-row'>
                             <li>
@@ -205,7 +178,7 @@ const AddRent = () => {
                                 type='checkbox'
                               />
                               <label for='a-1' class='checkbox-custom-label'>
-                                Air Condition
+                                کولر
                               </label>
                             </li>
                             <li>
@@ -216,7 +189,7 @@ const AddRent = () => {
                                 type='checkbox'
                               />
                               <label for='a-2' class='checkbox-custom-label'>
-                                Bedding
+                                اتاق خواب
                               </label>
                             </li>
                             <li>
@@ -227,7 +200,7 @@ const AddRent = () => {
                                 type='checkbox'
                               />
                               <label for='a-3' class='checkbox-custom-label'>
-                                Heating
+                                گرمایش
                               </label>
                             </li>
                             <li>
@@ -238,7 +211,7 @@ const AddRent = () => {
                                 type='checkbox'
                               />
                               <label for='a-4' class='checkbox-custom-label'>
-                                Internet
+                                اینترنت
                               </label>
                             </li>
                             <li>
@@ -249,20 +222,10 @@ const AddRent = () => {
                                 type='checkbox'
                               />
                               <label for='a-5' class='checkbox-custom-label'>
-                                Microwave
+                                ماکروفر
                               </label>
                             </li>
-                            <li>
-                              <input
-                                id='a-6'
-                                class='checkbox-custom'
-                                name='a-6'
-                                type='checkbox'
-                              />
-                              <label for='a-6' class='checkbox-custom-label'>
-                                Smoking Allow
-                              </label>
-                            </li>
+
                             <li>
                               <input
                                 id='a-7'
@@ -271,7 +234,7 @@ const AddRent = () => {
                                 type='checkbox'
                               />
                               <label for='a-7' class='checkbox-custom-label'>
-                                Terrace
+                                تراس
                               </label>
                             </li>
                             <li>
@@ -282,20 +245,10 @@ const AddRent = () => {
                                 type='checkbox'
                               />
                               <label for='a-8' class='checkbox-custom-label'>
-                                Balcony
+                                بالکن
                               </label>
                             </li>
-                            <li>
-                              <input
-                                id='a-9'
-                                class='checkbox-custom'
-                                name='a-9'
-                                type='checkbox'
-                              />
-                              <label for='a-9' class='checkbox-custom-label'>
-                                Icon
-                              </label>
-                            </li>
+
                             <li>
                               <input
                                 id='a-10'
@@ -304,7 +257,7 @@ const AddRent = () => {
                                 type='checkbox'
                               />
                               <label for='a-10' class='checkbox-custom-label'>
-                                Wi-Fi
+                                وای فای
                               </label>
                             </li>
                             <li>
@@ -315,7 +268,7 @@ const AddRent = () => {
                                 type='checkbox'
                               />
                               <label for='a-11' class='checkbox-custom-label'>
-                                Beach
+                                زمین بازی
                               </label>
                             </li>
                             <li>
@@ -326,7 +279,7 @@ const AddRent = () => {
                                 type='checkbox'
                               />
                               <label for='a-12' class='checkbox-custom-label'>
-                                Parking
+                                پارکینگ
                               </label>
                             </li>
                           </ul>
@@ -337,21 +290,21 @@ const AddRent = () => {
                 </div>
 
                 <div class='frm_submit_block'>
-                  <h3>Contact Information</h3>
+                  <h3>ارتباط با ما</h3>
                   <div class='frm_submit_wrap'>
                     <div class='form-row'>
                       <div class='form-group col-md-4'>
-                        <label>Name</label>
+                        <label>نام</label>
                         <input type='text' class='form-control' />
                       </div>
 
                       <div class='form-group col-md-4'>
-                        <label>Email</label>
+                        <label>ایمیل</label>
                         <input type='text' class='form-control' />
                       </div>
 
                       <div class='form-group col-md-4'>
-                        <label>Phone (optional)</label>
+                        <label>شماره تماس</label>
                         <input type='text' class='form-control' />
                       </div>
                     </div>
@@ -361,7 +314,7 @@ const AddRent = () => {
                 <div class='form-group'>
                   <div class='col-lg-12 col-md-12'>
                     <button class='btn btn-theme' type='submit'>
-                      Submit & Preview
+                      ارسال پیام
                     </button>
                   </div>
                 </div>

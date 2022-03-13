@@ -10,13 +10,11 @@ const Footer = () => {
             <div class='col-lg-12'>
               <div class='call_action_wrap'>
                 <a href='contact.html' class='btn btn-call_action_wrap'>
-                  Contact Us Today
+                  ارتباط با ما
                 </a>
                 <div class='call_action_wrap-head' style={{ textAlign: 'end' }}>
-                  <h3>Do You Have Questions ?</h3>
-                  <span>
-                    We'll assist you in finding the best property or homestay.
-                  </span>
+                  <h3>سوال خود را با ما مطرح کنید</h3>
+                  <span>در اسرع وقت به سوالات شما پاسخ میدهیم</span>
                 </div>
               </div>
             </div>
@@ -33,69 +31,51 @@ const Footer = () => {
               <div class='col-lg-6 col-md-7 ml-auto'>
                 <div class='row'>
                   <div class='col-lg-4 col-md-4'>
-                    <div class='footer_widget'>
-                      <h4 class='widget_title'>Layouts</h4>
+                    <div class='footer_widget text-right'>
+                      <h4 class='widget_title'>خانه</h4>
                       <ul class='footer-menu'>
                         <li>
-                          <a href='index.html#'>Home Page</a>
+                          <a href='index.html#'>درباره ما</a>
                         </li>
                         <li>
-                          <a href='index.html#'>About Page</a>
+                          <a href='index.html#'>اجاره</a>
                         </li>
                         <li>
-                          <a href='index.html#'>Service Page</a>
-                        </li>
-                        <li>
-                          <a href='index.html#'>Property Page</a>
-                        </li>
-                        <li>
-                          <a href='index.html#'>Contact Page</a>
-                        </li>
-                        <li>
-                          <a href='index.html#'>Single Blog</a>
+                          <a href='index.html#'>خدمات</a>
                         </li>
                       </ul>
                     </div>
                   </div>
 
                   <div class='col-lg-4 col-md-4'>
-                    <div class='footer_widget'>
-                      <h4 class='widget_title'>All Sections</h4>
+                    <div class='footer_widget text-right'>
+                      <h4 class='widget_title'>همه بخش ها</h4>
                       <ul class='footer-menu'>
                         <li>
-                          <a href='index.html#'>Features</a>
+                          <a href='index.html#'>امکانات</a>
                         </li>
                         <li>
-                          <a href='index.html#'>Attraction</a>
-                        </li>
-                        <li>
-                          <a href='index.html#'>Testimonials</a>
-                        </li>
-                        <li>
-                          <a href='index.html#'>Videos</a>
+                          <a href='index.html#'>توجهات</a>
                         </li>
                       </ul>
                     </div>
                   </div>
 
                   <div class='col-lg-4 col-md-4'>
-                    <div class='footer_widget'>
-                      <h4 class='widget_title'>Company</h4>
+                    <div class='footer_widget text-right'>
+                      <h4 class='widget_title'>شرکت ها</h4>
                       <ul class='footer-menu'>
                         <li>
-                          <a href='index.html#'>About</a>
+                          <a href='index.html#'>درباره ما</a>
                         </li>
                         <li>
-                          <a href='index.html#'>Blog</a>
+                          <a href='index.html#'>اخبار</a>
                         </li>
                         <li>
-                          <a href='index.html#'>Pricing</a>
+                          <a href='index.html#'>قیمت</a>
                         </li>
                         <li>
-                          <a href='index.html#'>Affiliate</a>
-                        </li>
-                        <li>
-                          <a href='index.html#'>Partners</a>
+                          <a href='index.html#'>مشارکت در فروش</a>
                         </li>
                       </ul>
                     </div>
@@ -103,21 +83,14 @@ const Footer = () => {
                 </div>
               </div>
               <div class='col-lg-5 col-md-5'>
-                <div class='footer_widget'>
+                <div class='footer_widget text-right '>
                   <img
                     src={footer}
                     class='img-footer small mb-2'
                     alt='rentvilla'
                   />
-                  <h4 class='extream mb-3'>
-                    Do you require assistance with
-                    <br />
-                    anything?
-                  </h4>
-                  <p>
-                    Every month, receive updates, hot deals, tutorials, and
-                    discounts delivered directly to your inbox.
-                  </p>
+                  <h4 class='extream mb-3'>ایا لازمه کمک کنیم</h4>
+                  <p>هرماه اپدیت جدید را دریافت کنید</p>
                   <div class='foot-news-last'>
                     <div class='input-group'>
                       <input
@@ -130,7 +103,7 @@ const Footer = () => {
                           type='button'
                           class='input-group-text theme-bg b-0 text-light'
                         >
-                          Subscribe
+                          ارتباط با ما
                         </button>
                       </div>
                     </div>
@@ -145,7 +118,9 @@ const Footer = () => {
           <div class='container'>
             <div class='row align-items-center'>
               <div class='col-lg-12 col-md-12 text-center'>
-                <p class='mb-0'>© 2021 RentVilla. Designd By LoopCode</p>
+                <p class='mb-0'>
+                  تمام حقوق این پرتال نزد شرکت نگارینه محقوظ است
+                </p>
               </div>
             </div>
           </div>

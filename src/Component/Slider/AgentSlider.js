@@ -111,10 +111,10 @@ export default function Carousel2() {
           {/* <!-- Single Item --> */}
           <div class='single_items'>
             <div class='grid_agents'>
-              <div class='elio_mx_list theme-bg-2'>102 Listings</div>
+              <div class='elio_mx_list theme-bg-2'>102 مورد</div>
               <div class='grid_agents-wrap'>
                 <div class='fr-grid-thumb'>
-                  <a href='agent-page.html'>
+                  <a>
                     <span class='verified'>
                       <img src={ver1} class='verify mx-auto' alt='' />
                     </span>
@@ -125,10 +125,10 @@ export default function Carousel2() {
                 <div class='fr-grid-deatil'>
                   <span>
                     <ImLocation2 />
-                    Montreal, USA
+                    کرج
                   </span>
                   <h5 class='fr-can-name'>
-                    <a href='agent-page.html'>Mark C. Muler</a>
+                    <a>امین</a>
                   </h5>
                   <ul class='inline_social'>
                     <li>
@@ -161,7 +161,7 @@ export default function Carousel2() {
                     class='btn agent-btn theme-bg'
                   >
                     <FaEnvelope style={{ margin: '7px' }} />
-                    Message
+                    پیام
                   </span>
                   <a href='index.html#' class='btn agent-btn theme-black'>
                     <AiFillPhone />
@@ -177,10 +177,10 @@ export default function Carousel2() {
           {/* <!-- Single Item --> */}
           <div class='single_items'>
             <div class='grid_agents'>
-              <div class='elio_mx_list theme-bg-2'>102 Listings</div>
+              <div class='elio_mx_list theme-bg-2'>102 مورد</div>
               <div class='grid_agents-wrap'>
                 <div class='fr-grid-thumb'>
-                  <a href='agent-page.html'>
+                  <a>
                     <span class='verified'>
                       <img src={ver1} class='verify mx-auto' alt='' />
                     </span>
@@ -191,10 +191,10 @@ export default function Carousel2() {
                 <div class='fr-grid-deatil'>
                   <span>
                     <ImLocation2 />
-                    Montreal, USA
+                    کرج
                   </span>
                   <h5 class='fr-can-name'>
-                    <a href='agent-page.html'>Mark C. Muler</a>
+                    <a>امین</a>
                   </h5>
                   <ul class='inline_social'>
                     <li>
@@ -227,7 +227,7 @@ export default function Carousel2() {
                     class='btn agent-btn theme-bg'
                   >
                     <FaEnvelope style={{ margin: '7px' }} />
-                    Message
+                    پیام
                   </span>
                   <a href='index.html#' class='btn agent-btn theme-black'>
                     <AiFillPhone />
@@ -237,16 +237,16 @@ export default function Carousel2() {
             </div>
           </div>
         </div>
-      </div>
+      </div>{' '}
       <div>
         <div class='item-slide space' style={{ width: '98%' }}>
           {/* <!-- Single Item --> */}
           <div class='single_items'>
             <div class='grid_agents'>
-              <div class='elio_mx_list theme-bg-2'>102 Listings</div>
+              <div class='elio_mx_list theme-bg-2'>102 مورد</div>
               <div class='grid_agents-wrap'>
                 <div class='fr-grid-thumb'>
-                  <a href='agent-page.html'>
+                  <a>
                     <span class='verified'>
                       <img src={ver1} class='verify mx-auto' alt='' />
                     </span>
@@ -257,10 +257,10 @@ export default function Carousel2() {
                 <div class='fr-grid-deatil'>
                   <span>
                     <ImLocation2 />
-                    Montreal, USA
+                    کرج
                   </span>
                   <h5 class='fr-can-name'>
-                    <a href='agent-page.html'>Mark C. Muler</a>
+                    <a>امین</a>
                   </h5>
                   <ul class='inline_social'>
                     <li>
@@ -293,7 +293,7 @@ export default function Carousel2() {
                     class='btn agent-btn theme-bg'
                   >
                     <FaEnvelope style={{ margin: '7px' }} />
-                    Message
+                    پیام
                   </span>
                   <a href='index.html#' class='btn agent-btn theme-black'>
                     <AiFillPhone />
@@ -303,16 +303,16 @@ export default function Carousel2() {
             </div>
           </div>
         </div>
-      </div>
+      </div>{' '}
       <div>
         <div class='item-slide space' style={{ width: '98%' }}>
           {/* <!-- Single Item --> */}
           <div class='single_items'>
             <div class='grid_agents'>
-              <div class='elio_mx_list theme-bg-2'>102 Listings</div>
+              <div class='elio_mx_list theme-bg-2'>102 مورد</div>
               <div class='grid_agents-wrap'>
                 <div class='fr-grid-thumb'>
-                  <a href='agent-page.html'>
+                  <a>
                     <span class='verified'>
                       <img src={ver1} class='verify mx-auto' alt='' />
                     </span>
@@ -323,10 +323,10 @@ export default function Carousel2() {
                 <div class='fr-grid-deatil'>
                   <span>
                     <ImLocation2 />
-                    Montreal, USA
+                    کرج
                   </span>
                   <h5 class='fr-can-name'>
-                    <a href='agent-page.html'>Mark C. Muler</a>
+                    <a>امین</a>
                   </h5>
                   <ul class='inline_social'>
                     <li>
@@ -359,7 +359,7 @@ export default function Carousel2() {
                     class='btn agent-btn theme-bg'
                   >
                     <FaEnvelope style={{ margin: '7px' }} />
-                    Message
+                    پیام
                   </span>
                   <a href='index.html#' class='btn agent-btn theme-black'>
                     <AiFillPhone />
@@ -369,16 +369,16 @@ export default function Carousel2() {
             </div>
           </div>
         </div>
-      </div>
+      </div>{' '}
       <div>
         <div class='item-slide space' style={{ width: '98%' }}>
           {/* <!-- Single Item --> */}
           <div class='single_items'>
             <div class='grid_agents'>
-              <div class='elio_mx_list theme-bg-2'>102 Listings</div>
+              <div class='elio_mx_list theme-bg-2'>102 مورد</div>
               <div class='grid_agents-wrap'>
                 <div class='fr-grid-thumb'>
-                  <a href='agent-page.html'>
+                  <a>
                     <span class='verified'>
                       <img src={ver1} class='verify mx-auto' alt='' />
                     </span>
@@ -389,10 +389,10 @@ export default function Carousel2() {
                 <div class='fr-grid-deatil'>
                   <span>
                     <ImLocation2 />
-                    Montreal, USA
+                    کرج
                   </span>
                   <h5 class='fr-can-name'>
-                    <a href='agent-page.html'>Mark C. Muler</a>
+                    <a>امین</a>
                   </h5>
                   <ul class='inline_social'>
                     <li>
@@ -425,7 +425,7 @@ export default function Carousel2() {
                     class='btn agent-btn theme-bg'
                   >
                     <FaEnvelope style={{ margin: '7px' }} />
-                    Message
+                    پیام
                   </span>
                   <a href='index.html#' class='btn agent-btn theme-black'>
                     <AiFillPhone />
@@ -435,16 +435,16 @@ export default function Carousel2() {
             </div>
           </div>
         </div>
-      </div>
+      </div>{' '}
       <div>
         <div class='item-slide space' style={{ width: '98%' }}>
           {/* <!-- Single Item --> */}
           <div class='single_items'>
             <div class='grid_agents'>
-              <div class='elio_mx_list theme-bg-2'>102 Listings</div>
+              <div class='elio_mx_list theme-bg-2'>102 مورد</div>
               <div class='grid_agents-wrap'>
                 <div class='fr-grid-thumb'>
-                  <a href='agent-page.html'>
+                  <a>
                     <span class='verified'>
                       <img src={ver1} class='verify mx-auto' alt='' />
                     </span>
@@ -455,10 +455,10 @@ export default function Carousel2() {
                 <div class='fr-grid-deatil'>
                   <span>
                     <ImLocation2 />
-                    Montreal, USA
+                    کرج
                   </span>
                   <h5 class='fr-can-name'>
-                    <a href='agent-page.html'>Mark C. Muler</a>
+                    <a>امین</a>
                   </h5>
                   <ul class='inline_social'>
                     <li>
@@ -491,7 +491,7 @@ export default function Carousel2() {
                     class='btn agent-btn theme-bg'
                   >
                     <FaEnvelope style={{ margin: '7px' }} />
-                    Message
+                    پیام
                   </span>
                   <a href='index.html#' class='btn agent-btn theme-black'>
                     <AiFillPhone />
@@ -501,16 +501,16 @@ export default function Carousel2() {
             </div>
           </div>
         </div>
-      </div>
+      </div>{' '}
       <div>
         <div class='item-slide space' style={{ width: '98%' }}>
           {/* <!-- Single Item --> */}
           <div class='single_items'>
             <div class='grid_agents'>
-              <div class='elio_mx_list theme-bg-2'>102 Listings</div>
+              <div class='elio_mx_list theme-bg-2'>102 مورد</div>
               <div class='grid_agents-wrap'>
                 <div class='fr-grid-thumb'>
-                  <a href='agent-page.html'>
+                  <a>
                     <span class='verified'>
                       <img src={ver1} class='verify mx-auto' alt='' />
                     </span>
@@ -521,10 +521,10 @@ export default function Carousel2() {
                 <div class='fr-grid-deatil'>
                   <span>
                     <ImLocation2 />
-                    Montreal, USA
+                    کرج
                   </span>
                   <h5 class='fr-can-name'>
-                    <a href='agent-page.html'>Mark C. Muler</a>
+                    <a>امین</a>
                   </h5>
                   <ul class='inline_social'>
                     <li>
@@ -557,7 +557,73 @@ export default function Carousel2() {
                     class='btn agent-btn theme-bg'
                   >
                     <FaEnvelope style={{ margin: '7px' }} />
-                    Message
+                    پیام
+                  </span>
+                  <a href='index.html#' class='btn agent-btn theme-black'>
+                    <AiFillPhone />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>{' '}
+      <div>
+        <div class='item-slide space' style={{ width: '98%' }}>
+          {/* <!-- Single Item --> */}
+          <div class='single_items'>
+            <div class='grid_agents'>
+              <div class='elio_mx_list theme-bg-2'>102 مورد</div>
+              <div class='grid_agents-wrap'>
+                <div class='fr-grid-thumb'>
+                  <a>
+                    <span class='verified'>
+                      <img src={ver1} class='verify mx-auto' alt='' />
+                    </span>
+                    <img src={team1} class='img-fluid mx-auto' alt='' />
+                  </a>
+                </div>
+
+                <div class='fr-grid-deatil'>
+                  <span>
+                    <ImLocation2 />
+                    کرج
+                  </span>
+                  <h5 class='fr-can-name'>
+                    <a>امین</a>
+                  </h5>
+                  <ul class='inline_social'>
+                    <li>
+                      <a href='index.html#' class='fb'>
+                        <FaFacebookF />
+                      </a>
+                    </li>
+                    <li>
+                      <a href='index.html#' class='ln'>
+                        <FaLinkedinIn />
+                      </a>
+                    </li>
+                    <li>
+                      <a href='index.html#' class='ins'>
+                        <AiFillInstagram />
+                      </a>
+                    </li>
+                    <li>
+                      <a href='index.html#' class='tw'>
+                        <FaTwitter />
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class='fr-infos-deatil'>
+                  <span
+                    data-toggle='modal'
+                    data-target='#autho-message'
+                    class='btn agent-btn theme-bg'
+                  >
+                    <FaEnvelope style={{ margin: '7px' }} />
+                    پیام
                   </span>
                   <a href='index.html#' class='btn agent-btn theme-black'>
                     <AiFillPhone />
