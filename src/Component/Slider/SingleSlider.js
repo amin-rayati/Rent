@@ -7,12 +7,12 @@ import p2 from '../../Assets/img/p-2.png'
 import p3 from '../../Assets/img/p-3.png'
 import p4 from '../../Assets/img/p-4.png'
 import p5 from '../../Assets/img/p-5.png'
-export default function Carousel2() {
+export default function SingleSlider({ad}) {
   const slickDefaults = {
     slidesToShow: 1,
     slidesToScroll: 1,
     initialSlide: 0,
-    dots: true,
+    dots: false,
     rtl: true,
     infinite: true,
     responsive: [
@@ -22,7 +22,7 @@ export default function Carousel2() {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
-          dots: true,
+          dots: false,
           rtl: true,
           infinite: true,
         },
@@ -33,7 +33,7 @@ export default function Carousel2() {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
-          dots: true,
+          dots: false,
           rtl: true,
           infinite: true,
         },
@@ -44,7 +44,7 @@ export default function Carousel2() {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
-          dots: true,
+          dots: false,
           rtl: true,
           infinite: true,
         },
@@ -55,7 +55,7 @@ export default function Carousel2() {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
-          dots: true,
+          dots: false,
           rtl: true,
           infinite: true,
         },
@@ -66,7 +66,7 @@ export default function Carousel2() {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
-          dots: true,
+          dots: false,
           rtl: true,
           infinite: true,
         },
@@ -77,7 +77,7 @@ export default function Carousel2() {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
-          dots: true,
+          dots: false,
           rtl: true,
           infinite: true,
         },
@@ -88,7 +88,7 @@ export default function Carousel2() {
           slidesToShow: 1,
           slidesToScroll: 1,
           initialSlide: 0,
-          dots: true,
+          dots: false,
           rtl: true,
           infinite: true,
         },
@@ -97,19 +97,12 @@ export default function Carousel2() {
   }
 
   return (
-    <Slider {...slickDefaults}>
-      <div>
-        <img src={p2} style={{ width: '100%' }} alt='' />
-      </div>
-      <div>
-        <img src={p3} style={{ width: '100%' }} alt='' />
-      </div>
-      <div>
-        <img src={p4} style={{ width: '100%' }} alt='' />
-      </div>
-      <div>
-        <img src={p5} style={{ width: '100%' }} alt='' />
-      </div>
+    <Slider className='mt-5' {...slickDefaults}>
+      {
+        ad.images.map(e => <div>
+          <img className='slick-image ml-auto mr-auto' src={e}  alt='' />
+        </div>)
+      }
     </Slider>
   )
 }

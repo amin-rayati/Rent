@@ -1,655 +1,498 @@
-import { React, useState } from 'react'
-import Select from 'react-select'
-import p1 from '../../Assets/img/p-1.png'
-import { AiFillHeart, AiOutlineArrowRight } from 'react-icons/ai'
-import { Link, NavLink } from 'react-router-dom'
+import {React, useEffect, useState} from 'react'
+import {MySelect} from "../../Component/MySelect";
+import {number_format, RequestsUtil} from "../../Utils/RequestsUtil";
+import Loading from "../../Component/Loading/LoginLoading";
+import {RiArrowDownSLine, RiArrowLeftSLine} from "react-icons/ri";
+import {Link, useLocation} from "react-router-dom";
+import CheckBox from "@mui/material/Checkbox";
+import Checkbox from "@mui/material/Checkbox";
+
+import {Modal} from "react-bootstrap";
+import {components} from "react-select";
+import Button from "@mui/material/Button";
+
+const {Option} = components;
+const IconOption = props => (
+    <Option {...props}>
+        {props.data.icon ? <img className='ml-2'
+                                src={props.data.icon}
+                                style={{width: 36}}
+                                alt={props.data.label}
+        /> : ''}
+
+        {props.data.label}
+    </Option>
+);
 
 const List = () => {
-  const aquaticCreatures = [
-    { label: 'بهشتی', value: 'بهشتی' },
-    { label: 'طالقانی', value: 'طالقانی' },
-    { label: 'شهدا', value: 'شهدا' },
-    { label: 'باغستان', value: 'باغستان' },
-    { label: 'شاهین ویلا', value: 'شاهین ویلا' },
-  ]
+    const CheckBox = ({option, type, onChange}) => {
+        type = `${type}[${option.id}]`;
 
-  const [grid, setGrid] = useState(false)
-  return (
-    <div id='main-wrapper'>
-      <section class='gray pt-4 ' style={{ marginTop: '80px' }}>
-        <div class='container'>
-          <div class='row m-0'>
-            <div class='short_wraping'>
-              <div class='row align-items-center'>
-                <div class='col-lg-3 col-md-6 col-sm-12  col-sm-6'>
-                  <ul class='shorting_grid'>
-                    <li
-                      onClick={() => {
-                        setGrid(false)
-                      }}
-                      class='list-inline-item'
-                    >
-                      <span
-                        style={{ cursor: 'pointer' }}
-                        class='ti-layout-grid2'
-                      ></span>
-                      گرید
-                    </li>
-                    <li
-                      onClick={() => {
-                        setGrid(true)
-                      }}
-                      class='list-inline-item'
-                    >
-                      <span
-                        style={{ cursor: 'pointer' }}
-                        class='ti-view-list'
-                      ></span>
-                      لیست
-                    </li>
-                  </ul>
-                </div>
+        return (
+            <>
+                <div className='form-group col-md-4 d-flex'>
 
-                <div class='col-lg-6 col-md-12 col-sm-12 order-lg-2 order-md-3 elco_bor col-sm-12'>
-                  <div class='shorting_pagination'>
-                    <div class='shorting_pagination_right'>
-                      <ul>
-                        <li>
-                          <a href='javascript:void(0);' class='active'>
-                            1
-                          </a>
-                        </li>
-                        <li>
-                          <a href='javascript:void(0);'>2</a>
-                        </li>
-                        <li>
-                          <a href='javascript:void(0);'>3</a>
-                        </li>
-                        <li>
-                          <a href='javascript:void(0);'>4</a>
-                        </li>
-                        <li>
-                          <a href='javascript:void(0);'>5</a>
-                        </li>
-                        <li>
-                          <a href='javascript:void(0);'>6</a>
-                        </li>
-                      </ul>
-                    </div>
-                    <div class='shorting_pagination_laft text-right'>
-                      <h5>نمایش 10 از بین 100</h5>
-                    </div>
-                  </div>
-                </div>
+                    <Checkbox id={type + "_" + option.id} onChange={onChange} value={option.id} name={type}
+                              color="success"/>
+                    <label className='mt-auto mb-auto'>{option.name}</label>
 
-                <div class='col-lg-3 col-md-6 col-sm-12 order-lg-3 order-md-2 col-sm-6'>
-                  <div
-                    class='shorting-right'
-                    style={{ justifyContent: 'space-between' }}
-                  >
-                    <div class='dropdown show'>
-                      <select style={{ border: '1px solid gray' }}>
-                        <option>گرانترین</option>
-                        <option>ارزانترین</option>
-                        <option>جدیدترین</option>
-                      </select>
-                    </div>
-                    <label>مرتب سازی بر اساس</label>
-                  </div>
                 </div>
-              </div>
+            </>
+        );
+    }
+    let {pathname} = useLocation();
+
+    const getCity = async () => {
+        await getCities();
+
+        setShowCityModal(true);
+    }
+
+
+    const [grid, setGrid] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [page, setPage] = useState(1)
+    const [ads, setAds] = useState([]);
+    const [showTrust, setShowTrust] = useState(false);
+    const [showRent, setShowRent] = useState(false);
+    const [showCityModal, setShowCityModal] = useState(false);
+    const [closeCityModal, setCloseCityModal] = useState(false);
+    const [cityId, setCityId] = useState(0);
+    const [districts, setDistricts] = useState(0);
+    const loadMore = async () => {
+        setLoading(true);
+        await setPage(prevState => prevState + 1);
+        await getAds();
+        setLoading(false);
+    }
+    const getAds = async () => {
+        setTimeout(async () => {
+            let form = document.getElementById('filterForm')
+            let formData = new FormData(form);
+            formData.append('page', page.toString());
+            formData.append('cityId', cityId.toString());
+            if (!formData.get('categoryId')) {
+                formData.set('categoryId', '0');
+            }
+            const list = await RequestsUtil.adList(formData);
+            if (list.isDone) {
+                setAds(prevState => [...prevState, ...list.data]);
+            }
+        }, 250)
+    }
+    const expandTrust = () => setShowTrust(!showTrust)
+
+    const expandRent = () => setShowRent(!showRent)
+    const [cities, setCities] = useState([]);
+    const selectCity = async cityId => {
+        window.location.href = '/search/' + cityId
+    }
+    const getCities = async () => {
+        let result = await RequestsUtil.allCities();
+        if (result.isDone) {
+            setCities(result.data);
+        }
+    }
+    useEffect(() => {
+        if (pathname.split('/').length < 3) {
+            getCity();
+        } else {
+            setCityId(parseInt(pathname.split('/').pop()));
+            init(parseInt(pathname.split('/').pop()));
+        }
+    }, [])
+    const init = async cityId => {
+        await getCities();
+        await getAds();
+        await getDistricts(cityId);
+        await getCategories();
+    }
+    const getDistricts = async cityId => {
+        let result = await RequestsUtil.getDistricts(cityId);
+        if (result.isDone) {
+            setDistricts(result.data);
+        }
+    }
+    const FilterComponent = ({show, title, expand, name,}) => {
+        return (
+            <div className='form-group row pr-3 pl-3 flex-nowrap'>
+                                           <span onClick={expand}
+                                                 className={'collapse-icon-parsa ' + (show ? 'rotate' : '')}>
+                                                <RiArrowDownSLine size={25}/>
+                                            </span>
+                <div className={'filter-collapse mr-1 ' + (show ? 'expand' : '')}>
+                    <div className='justify-content-between'>
+                        <span className='expand-title'>{title}</span>
+                        <span className='expand-title text-danger float-left'
+                              style={{fontSize: '12px', cursor: 'pointer',}}>
+                                                    {show ? 'اعمال' : 'حذف'}
+                                                </span>
+                    </div>
+                    <div className='mt-3 row pl-3 pr-3  justify-content-between'>
+                        <label style={{fontSize: '12px', color: "grey"}} className='mt-auto mb-auto'>حداقل</label>
+                        <input
+                            name={name + '[min]'}
+                            type='text'
+                            className='form-control w-75 expand-input'
+                            placeholder='مبلغ پیشنهادی'
+                        />
+                    </div>
+                    <div className='row mt-2 pl-3 pr-3 justify-content-between'>
+                        <label style={{fontSize: '12px', color: "grey"}} className='mt-auto mb-auto'>حداکثر</label>
+                        <input
+                            name={name + '[max]'}
+                            type='text'
+                            className='form-control w-75 expand-input'
+                            placeholder='مبلغ پیشنهادی'
+                        />
+                    </div>
+                </div>
             </div>
-          </div>
+        );
+    }
+    const SelectCityModal = () => {
 
-          <div class='row'>
-            {/* <!-- property Sidebar --> */}
-
-            {!grid ? (
-              <div class='col-lg-8 order-lg-1 col-md-12 order-md-2 col-sm-12 order-sm-2 col-12 order-2'>
-                <div class='row justify-content-center'>
-                  {/* <!-- Single Property --> */}
-                  <Link to='/search/1' class='col-lg-6 col-md-6 col-sm-12'>
-                    <div>
-                      <div class='property-listing property-2 text-right'>
-                        <div class='listing-img-wrapper'>
-                          <div class='_exlio_125'>برای اجاره</div>
-                          <div class='list-img-slide'>
-                            <div class='click'>
-                              <div>
-                                <a href='single-property-1.html'>
-                                  <img
-                                    src={p1}
-                                    class='img-fluid mx-auto'
-                                    alt=''
-                                  />
-                                </a>
-                              </div>
-                              <div>
-                                <a href='single-property-1.html'>
-                                  <img
-                                    src='assets/img/p-2.png'
-                                    class='img-fluid mx-auto'
-                                    alt=''
-                                  />
-                                </a>
-                              </div>
-                              <div>
-                                <a href='single-property-1.html'>
-                                  <img
-                                    src='assets/img/p-3.png'
-                                    class='img-fluid mx-auto'
-                                    alt=''
-                                  />
-                                </a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class='listing-detail-wrapper'>
-                          <div class='listing-short-detail-wrap'>
-                            <div class='_card_list_flex mb-2'>
-                              <div class='_card_flex_01'>
-                                <span class='_list_blickes _netork'>
-                                  4 شبکه
-                                </span>
-                                <span class='_list_blickes types'>ویلایی</span>
-                              </div>
-                              <div class='_card_flex_last'>
-                                <h6 class='listing-card-info-price mb-0'>
-                                  تومان 6,700
-                                </h6>
-                              </div>
-                            </div>
-                            <div class='_card_list_flex'>
-                              <div class='_card_flex_01'>
-                                <h4 class='listing-name verified'>
-                                  <a
-                                    href='single-property-1.html'
-                                    class='prt-link-detail'
-                                  >
-                                    کرج دهقان ویلای دوم
-                                  </a>
-                                </h4>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class='price-features-wrapper'>
-                          <div class='list-fx-features'>
-                            <div class='listing-card-info-icon'>
-                              <div class='inc-fleat-icon'>
-                                <img
-                                  src='assets/img/bed.svg'
-                                  width='13'
-                                  alt=''
-                                />
-                              </div>
-                              4 خواب
-                            </div>
-                            <div class='listing-card-info-icon'>
-                              <div class='inc-fleat-icon'>
-                                <img
-                                  src='assets/img/bathtub.svg'
-                                  width='13'
-                                  alt=''
-                                />
-                              </div>
-                              2 حمام
-                            </div>
-                            <div class='listing-card-info-icon'>
-                              <div class='inc-fleat-icon'>
-                                <img
-                                  src='assets/img/move.svg'
-                                  width='13'
-                                  alt=''
-                                />
-                              </div>
-                              820 متر
-                            </div>
-                          </div>
-                        </div>
-
-                        <div class='listing-detail-footer'>
-                          <div class='footer-first'>
-                            <div class='foot-location'>
-                              <img src='assets/img/pin.svg' width='18' alt='' />
-                              کرج گلشهر
-                            </div>
-                          </div>
-                          <div class='footer-flex'>
-                            <ul class='selio_style'>
-                              <li>
-                                <div class='prt_saveed_12lk'>
-                                  <label
-                                    class='toggler toggler-danger'
-                                    data-toggle='tooltip'
-                                    data-placement='top'
-                                    data-original-title='Save property'
-                                  >
-                                    <input type='checkbox' />
-                                    <AiFillHeart />
-                                  </label>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-
-                  {/* <!-- End Single Property -->*/}
-                </div>
-              </div>
-            ) : (
-              <div class='col-lg-8 order-lg-1 col-md-12 order-md-2 col-sm-12 order-sm-2 col-12 order-2'>
-                <div
-                  class='row justify-content-center'
-                  style={{ justifyContent: 'right' }}
+        const CityListItem = ({city}) => {
+            return <li onClick={() => selectCity(city.id)}
+                       className={'d-flex justify-content-between city-item ' + (cities.indexOf(city) === cities.length - 1 ? 'last' : '')}>
+            <span>
+                {city.name}
+            </span>
+                <RiArrowLeftSLine className='mt-auto mb-auto' color='grey'/>
+            </li>
+        }
+        return <Modal show={showCityModal} onHide={closeCityModal} centered>
+            <Modal.Header style={{justifyContent: 'center', border: 'none'}}>
+                <Modal.Title
+                    style={{fontWeight: 'bolder', textAlign: 'center', width: '100%', direction: 'rtl'}}
                 >
-                  {/* <!-- Single Property --> */}
-                  <Link
-                    to='/search/1'
-                    class='col-xl-12 col-lg-12 col-md-12 col-sm-12'
-                  >
-                    <div>
-                      <div class='property-listing list_view text-right'>
-                        <div class='listing-img-wrapper'>
-                          <div class='_exlio_125'>اجاره </div>
-                          <div class='list-img-slide'>
-                            <div class='click'>
-                              <div>
-                                <a href='single-property-1.html'>
-                                  <img
-                                    src={p1}
-                                    class='img-fluid mx-auto'
-                                    alt=''
-                                  />
-                                </a>
-                              </div>
-                              <div>
-                                <a href='single-property-1.html'>
-                                  <img
-                                    src='assets/img/p-2.png'
-                                    class='img-fluid mx-auto'
-                                    alt=''
-                                  />
-                                </a>
-                              </div>
-                              <div>
-                                <a href='single-property-1.html'>
-                                  <img
-                                    src='assets/img/p-3.png'
-                                    class='img-fluid mx-auto'
-                                    alt=''
-                                  />
-                                </a>
-                              </div>
+                    <div
+                        style={{
+                            borderRadius: '10px',
+                            color: 'grey',
+                            width: '100%',
+
+                            fontSize: '21px',
+                        }}
+                    >
+                        انتخاب شهر
+                    </div>
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body
+                style={{direction: 'rtl', textAlign: 'right', height: '300px'}}
+            >
+                <ul>
+                    {cities.map(e => <CityListItem city={e}/>)}
+                </ul>
+            </Modal.Body>
+        </Modal>;
+    }
+    const [categories, setCategories] = useState(null);
+
+    const getCategories = async () => {
+        const res = await RequestsUtil.getCategories();
+        if (res.isDone) {
+            setCategories(res.data);
+        }
+    }
+    const [optionData, setOptionData] = useState(null);
+    const onCategoryChanged = async e => {
+        await getOptionData(e.value);
+        await getAds();
+    }
+
+    const getOptionData = async categoryId => {
+        const res = await RequestsUtil.getOptionData(categoryId);
+        if (res.isDone) {
+            setOptionData(res.data);
+        }
+    }
+    return (
+        <>
+            <SelectCityModal/>
+            <div id='main-wrapper' style={{direction: 'rtl'}}>
+
+                <section className='gray pt-4 ' style={{marginTop: '80px'}}>
+                    <div
+                        className='row mt-5 col-xl-10 col-lg-12 col-md-12 col-sm-12 mr-auto ml-auto justify-content-center'>
+                        <div className='col-lg-4 order-lg-1 col-md-12 order-md-1 col-sm-12 order-sm-1 col-12 order-1'>
+                            <div className='page-sidebar p-0'>
+                                <div id='fltbox'>
+                                    <form id='filterForm' className='sidebar-widgets p-4'>
+                                        <FilterComponent name='trust' show={showTrust} expand={expandTrust}
+                                                         title='ودیعه'/>
+                                        <FilterComponent name='rent' show={showRent} expand={expandRent} title='اجاره'/>
+
+
+                                        <div className='form-group'>
+                                            {districts ? <div
+                                                className='simple-input'
+                                                style={{justifyContent: 'right'}}
+                                            >
+
+                                                <MySelect
+                                                    onChange={getAds}
+                                                    placeholder='منطقه'
+                                                    name='districtIds[]'
+                                                    isMulti={true}
+                                                    options={
+                                                        districts.map(e => {
+                                                            return {
+                                                                label: e.name,
+                                                                value: e.id,
+                                                            };
+                                                        })
+                                                    }
+                                                />
+                                            </div> : ''}
+                                        </div>
+
+                                        <div className='form-group'>
+                                            {categories ? <div
+                                                className='simple-input'
+                                                style={{justifyContent: 'right'}}
+                                            >
+                                                <MySelect
+
+                                                    name='categoryId'
+                                                    placeholder='دسته بندی'
+                                                    components={{Option: IconOption,}}
+                                                    onChange={onCategoryChanged}
+
+                                                    options={[
+                                                        {
+                                                            label: "همه",
+                                                            value: 0,
+
+                                                        },
+                                                        ...categories.map(e => {
+                                                            return {
+                                                                label: e.name,
+                                                                value: e.id,
+                                                                icon: e.icon,
+                                                            };
+                                                        })
+                                                    ]}
+                                                />
+                                            </div> : ''}
+                                        </div>
+
+                                        {optionData ? <>
+                                            <div className='row'>
+                                                <h6 className='mt-2 mr-3'>امکانات پیشرفته</h6>
+                                                <div className='col-lg-12 col-md-12 col-sm-12 text-right row  mr-1'>
+                                                    {optionData.advancedOptions.map(e => <CheckBox onChange={getAds}
+                                                                                                   option={e}
+                                                                                                   type={'advancedOptions'}
+                                                    />)}
+                                                </div>
+                                            </div>
+                                            <div className='row'>
+                                                <h6 className='mt-2 mr-3'>امکانات رفاهی</h6>
+                                                <div className='col-lg-12 col-md-12 col-sm-12 text-right row  mr-1'>
+
+                                                    {optionData.welfareOptions.map(e => <CheckBox onChange={getAds}
+                                                                                                  option={e}
+                                                                                                  type={'welfareOptions'}
+                                                    />)}
+                                                </div>
+                                            </div>
+
+
+                                            {optionData.options ?
+                                                optionData.options.map(e => {
+                                                    return <div className='form-group'>
+                                                        <div
+                                                            className='simple-input'
+                                                            style={{justifyContent: 'right'}}
+                                                        >
+                                                            <label>{e.name}</label>
+                                                            {e.values.length > 0 ? <MySelect
+                                                                name={`options[${e.id}][]`}
+                                                                placeholder=''
+                                                                isMulti={true}
+                                                                onChange={getAds}
+                                                                options={e.values.map(value => {
+                                                                    return {
+                                                                        label: value.name,
+                                                                        value: value.id,
+                                                                    };
+                                                                })}
+                                                            /> : <input name={`options[${e.id}]`}
+                                                                        className='form-control'/>
+                                                            }
+                                                        </div>
+                                                    </div>;
+                                                })
+                                                : ''}
+                                            {optionData.otherOptions ?
+                                                optionData.otherOptions.map(e => {
+                                                    return <div className='form-group'>
+                                                        <div
+                                                            className='simple-input'
+                                                            style={{justifyContent: 'right'}}
+                                                        >
+                                                            <label>{e.name}</label>
+                                                            {e.values.length > 0 ? <MySelect
+                                                                name={`otherOptions[${e.id}][]`}
+                                                                placeholder=''
+                                                                isMulti={true}
+                                                                onChange={getAds}
+
+                                                                options={e.values.map(value => {
+                                                                    return {
+                                                                        label: value.name,
+                                                                        value: value.id,
+                                                                    };
+                                                                })}
+                                                            /> : <input name={`options[${e.id}]`}
+                                                                        className='form-control'/>
+                                                            }
+                                                        </div>
+                                                    </div>;
+                                                })
+                                                : ''}
+                                        </> : ''}
+
+                                    </form>
+                                </div>
                             </div>
-                          </div>
                         </div>
 
-                        <div class='list_view_flex'>
-                          <div class='listing-detail-wrapper mt-1'>
-                            <div class='listing-short-detail-wrap'>
-                              <div class='_card_list_flex mb-2'>
-                                <div class='_card_flex_01'>
-                                  <span class='_list_blickes _netork'>
-                                    6 شبکه
-                                  </span>
-                                  <span class='_list_blickes types'>
-                                    خانواده
-                                  </span>
-                                </div>
-                                <div class='_card_flex_last'>
-                                  <h6 class='listing-card-info-price mb-0'>
-                                    تومان 7,000
-                                  </h6>
-                                </div>
-                              </div>
-                              <div class='_card_list_flex'>
-                                <div class='_card_flex_01'>
-                                  <h4 class='listing-name verified'>
-                                    <a
-                                      href='single-property-1.html'
-                                      class='prt-link-detail'
-                                    >
-                                      عظیمیه میدان گلستان گلستان 12
-                                    </a>
-                                  </h4>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
 
-                          <div class='price-features-wrapper'>
-                            <div class='list-fx-features'>
-                              <div class='listing-card-info-icon'>
-                                <div class='inc-fleat-icon'>
-                                  <img
-                                    src='assets/img/bed.svg'
-                                    width='13'
-                                    alt=''
-                                  />
-                                </div>
-                                3 خواب
-                              </div>
-                              <div class='listing-card-info-icon'>
-                                <div class='inc-fleat-icon'>
-                                  <img
-                                    src='assets/img/bathtub.svg'
-                                    width='13'
-                                    alt=''
-                                  />
-                                </div>
-                                1 حمام
-                              </div>
-                              <div class='listing-card-info-icon'>
-                                <div class='inc-fleat-icon'>
-                                  <img
-                                    src='assets/img/move.svg'
-                                    width='13'
-                                    alt=''
-                                  />
-                                </div>
-                                100 متر
-                              </div>
-                            </div>
-                          </div>
+                        <div
+                            className='col-lg-8 order-lg-1 col-md-12 order-md-2 col-sm-12 order-sm-2 col-12 order-1'>
+                            <div
+                                className='row justify-content-center'
+                                style={{justifyContent: 'center'}}
+                            >
 
-                          <div class='listing-detail-footer'>
-                            <div class='footer-first'>
-                              <div class='foot-rates'>
-                                <span class='elio_rate good'>4.2</span>
-                                <div class='_rate_stio'>
-                                  <i class='fa fa-star'></i>
-                                  <i class='fa fa-star'></i>
-                                  <i class='fa fa-star'></i>
-                                  <i class='fa fa-star'></i>
-                                  <i class='fa fa-star'></i>
-                                </div>
-                              </div>
+                                {
+                                    ads.length > 0 ?
+                                        <>
+                                            {ads.map(e => <SingleAdListItem ad={e}/>)}
+                                            <Button onClick={loadMore} className='login-btn'>
+                                                {!loading ? 'بارگذاری بیشتر...' : <Loading/>}
+                                            </Button>
+                                        </>
+                                        : <Loading/>
+                                }
                             </div>
-                            <div class='footer-flex'>
-                              <a href='single-property-1.html' class='prt-view'>
-                                جزیات
-                              </a>
-                            </div>
-                          </div>
                         </div>
-                      </div>
-                    </div>
-                  </Link>
 
-                  {/* <!-- End Single Property --> */}
-                </div>
-              </div>
-            )}
 
-            <div class='col-lg-4 order-lg-2 col-md-12 order-md-1 col-sm-12 order-sm-1 col-12 order-1'>
-              <div class='page-sidebar p-0'>
-                <div id='fltbox'>
-                  {/* <!-- Find New Property --> */}
-                  <div class='sidebar-widgets p-4'>
-                    <div class='form-group'>
-                      <div class='input-with-icon'>
-                        <input
-                          type='text'
-                          class='form-control'
-                          placeholder='محله'
-                        />
-                        <i class='ti-search'></i>
-                      </div>
                     </div>
 
-                    <div class='form-group'>
-                      <div class='input-with-icon'>
-                        <input
-                          type='text'
-                          class='form-control'
-                          placeholder='منطقه'
-                        />
-                        <i class='ti-location-pin'></i>
-                      </div>
-                    </div>
-
-                    <div class='form-group'>
-                      <div
-                        class='simple-input'
-                        style={{ justifyContent: 'right' }}
-                      >
-                        <Select
-                          placeholder='منطقه'
-                          style={{ zIndex: '999' }}
-                          options={aquaticCreatures}
-                        />
-                      </div>
-                    </div>
-
-                    <div class='form-group'>
-                      <div
-                        class='simple-input'
-                        style={{ justifyContent: 'right' }}
-                      >
-                        <Select
-                          style={{ zIndex: '999' }}
-                          options={aquaticCreatures}
-                          placeholder='منطقه'
-                        />
-                      </div>
-                    </div>
-
-                    <div class='form-group'>
-                      <div
-                        class='simple-input'
-                        style={{ justifyContent: 'right' }}
-                      >
-                        <Select
-                          style={{ zIndex: '999' }}
-                          options={aquaticCreatures}
-                          placeholder='منطقه'
-                        />
-                      </div>
-                    </div>
-
-                    <div class='form-group'>
-                      <div
-                        class='simple-input'
-                        style={{ justifyContent: 'right' }}
-                      >
-                        <Select
-                          style={{ zIndex: '999' }}
-                          options={aquaticCreatures}
-                          placeholder='منطقه'
-                        />
-                      </div>
-                    </div>
-
-                    <div class='form-group'>
-                      <div
-                        class='simple-input'
-                        style={{ justifyContent: 'right' }}
-                      >
-                        <Select
-                          style={{ zIndex: '999' }}
-                          options={aquaticCreatures}
-                          placeholder='منطقه'
-                        />
-                      </div>
-                    </div>
-
-                    <div class='form-group'>
-                      <div
-                        class='simple-input'
-                        style={{ justifyContent: 'right' }}
-                      >
-                        <Select
-                          style={{ zIndex: '999' }}
-                          options={aquaticCreatures}
-                          placeholder='منطقه'
-                        />
-                      </div>
-                    </div>
-
-                    <div class='form-group'>
-                      <div
-                        class='simple-input'
-                        style={{ justifyContent: 'right' }}
-                      >
-                        <Select
-                          style={{ zIndex: '999' }}
-                          options={aquaticCreatures}
-                          placeholder='منطقه'
-                        />
-                      </div>
-                    </div>
-
-                    <div class='row'>
-                      <div class='col-lg-6 col-md-6 col-sm-6'>
-                        <div class='form-group'>
-                          <div
-                            class='simple-input'
-                            style={{ justifyContent: 'right' }}
-                          >
-                            <input
-                              type='text'
-                              class='form-control'
-                              placeholder='حداقل متراژ'
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div class='col-lg-6 col-md-6 col-sm-6'>
-                        <div class='form-group'>
-                          <div
-                            class='simple-input'
-                            style={{ justifyContent: 'right' }}
-                          >
-                            <input
-                              type='text'
-                              class='form-control'
-                              placeholder='حداکثر متراژ'
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class='row'>
-                      <div class='col-lg-12 col-md-12 col-sm-12 pt-4 text-right'>
-                        <h6>امکانات ویژه</h6>
-                        <ul class='row p-0 m-0'>
-                          <li class='col-lg-6 col-md-6 p-0'>
-                            <input
-                              id='a-1'
-                              class='checkbox-custom'
-                              name='a-1'
-                              type='checkbox'
-                            />
-                            <label for='a-1' class='checkbox-custom-label'>
-                              کولر
-                            </label>
-                          </li>
-                          <li class='col-lg-6 col-md-6 p-0'>
-                            <input
-                              id='a-2'
-                              class='checkbox-custom'
-                              name='a-2'
-                              type='checkbox'
-                            />
-                            <label for='a-2' class='checkbox-custom-label'>
-                              اتاق خواب
-                            </label>
-                          </li>
-                          <li class='col-lg-6 col-md-6 p-0'>
-                            <input
-                              id='a-3'
-                              class='checkbox-custom'
-                              name='a-3'
-                              type='checkbox'
-                            />
-                            <label for='a-3' class='checkbox-custom-label'>
-                              گرمایش
-                            </label>
-                          </li>
-                          <li class='col-lg-6 col-md-6 p-0'>
-                            <input
-                              id='a-4'
-                              class='checkbox-custom'
-                              name='a-4'
-                              type='checkbox'
-                            />
-                            <label for='a-4' class='checkbox-custom-label'>
-                              اینترنت
-                            </label>
-                          </li>
-                          <li class='col-lg-6 col-md-6 p-0'>
-                            <input
-                              id='a-5'
-                              class='checkbox-custom'
-                              name='a-5'
-                              type='checkbox'
-                            />
-                            <label for='a-5' class='checkbox-custom-label'>
-                              ماکروفر
-                            </label>
-                          </li>
-                          <li class='col-lg-6 col-md-6 p-0'>
-                            <input
-                              id='a-6'
-                              class='checkbox-custom'
-                              name='a-6'
-                              type='checkbox'
-                            />
-                            <label for='a-6' class='checkbox-custom-label'>
-                              سیگار کشیدن
-                            </label>
-                          </li>
-                          <li class='col-lg-6 col-md-6 p-0'>
-                            <input
-                              id='a-7'
-                              class='checkbox-custom'
-                              name='a-7'
-                              type='checkbox'
-                            />
-                            <label for='a-7' class='checkbox-custom-label'>
-                              تراس
-                            </label>
-                          </li>
-                          <li class='col-lg-6 col-md-6 p-0'>
-                            <input
-                              id='a-8'
-                              class='checkbox-custom'
-                              name='a-8'
-                              type='checkbox'
-                            />
-                            <label for='a-8' class='checkbox-custom-label'>
-                              بالکن
-                            </label>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-
-                    <div class='row'>
-                      <div class='col-lg-12 col-md-12 col-sm-12 pt-4'>
-                        <button class='btn theme-bg rounded full-width'>
-                          خونه جدید پیدا کن
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* <!-- Sidebar End --> */}
+                </section>
             </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  )
-}
+        </>
+    )
 
+}
+const SingleAdListItem = ({ad}) => {
+    return (
+        <div
+            className='col-xl-12 col-lg-12 col-md-12 col-sm-12'
+        >
+            <div>
+                <div className='property-listing list_view text-right row'>
+                    <div className='listing-img-wrapper text-center' style={{width: '14em',}}>
+                        <Link to={'/ad/' + ad.id}>
+                            <img
+                                style={{
+                                    width: '12em',
+                                    height: '12em',
+                                    borderRadius: '10px',
+                                    objectFit: 'cover',
+                                }}
+                                src={ad.image}
+                                className='img-fluid mx-auto'
+                                alt=''
+                            />
+                        </Link>
+
+
+                        <span className='text-center mt-4 d-block' style={{color: "grey", fontSize: '12px'}}>
+                            {ad.date} در {ad.district.name}
+                        </span>
+
+                    </div>
+
+                    <div className='list_view_flex' style={{width: 'max-content'}}>
+                        <div className='listing-detail-wrapper mt-1'>
+                            <div className='listing-short-detail-wrap'>
+                                <div className='_card_list_flex mb-2'>
+                                    <div className='_card_flex_01'>
+                                        {
+                                            ad.advancedOptions ?
+                                                ad.advancedOptions.map(e => <span
+                                                        className={`_list_blickes ${e.isActive ? 'types' : '_netork'}`}>
+                                                        {e.name}
+                                                </span>
+                                                )
+                                                : ''
+                                        }
+                                        {
+                                            ad.welfareOptions ?
+                                                ad.welfareOptions.map(e => <span
+                                                        className={`_list_blickes m-1 ${e.isActive ? 'types' : '_netork'}`}>
+                                                        {e.name}
+                                                </span>
+                                                )
+                                                : ''
+                                        }
+                                    </div>
+                                    <div className='_card_flex_last'>
+                                        <h6 className='listing-card-info-price mb-0'>
+                                            {ad.rentType.name} - {number_format(ad.rent)} تومان
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div className='_card_list_flex'>
+                                    <div className='_card_flex_01'>
+                                        <h3 className='listing-name verified mr-1' style={{fontSize: '21px'}}>
+                                            {ad.title}
+                                        </h3>
+                                        <p className='mr-1' style={{color: "grey", fontSize: '12px'}}>
+                                            {ad.details}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className='price-features-wrapper'>
+                            <div className='list-fx-features'>
+                                {
+                                    ad.options.map(e => <div className='listing-card-info-icon'>
+
+                                        {e.name}: {e.value.name}
+                                    </div>)
+                                }
+                                {
+                                    ad.otherOptions.map(e => <div className='listing-card-info-icon'>
+
+                                        {e.name}: {e.value.name}
+                                    </div>)
+                                }
+                            </div>
+                        </div>
+
+                        <div className='listing-detail-footer'>
+                            <div className='footer-first' style={{color: "grey", fontSize: '1۲px'}}>
+                                ودیعه: {number_format(ad.trust)} تومان
+                            </div>
+                            <div className='footer-flex'>
+                                <a href={'/ad/' + ad.id} className='prt-view'>
+                                    مشاهده
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
 export default List

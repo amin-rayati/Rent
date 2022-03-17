@@ -1,203 +1,221 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import SingleSlider from '../../Component/Slider/SingleSlider'
-import {
-  FaBed,
-  FaBath,
-  FaExpandArrowsAlt,
-  FaHouseDamage,
-  FaBuilding,
-  FaUtensils,
-  FaBriefcaseMedical,
-  FaFire,
-  FaLayerGroup,
-} from 'react-icons/fa'
+import {FaClock,} from 'react-icons/fa'
+import {useLocation} from "react-router-dom";
+import {number_format, RequestsUtil} from "../../Utils/RequestsUtil";
+import Loading from "../../Component/Loading/LoginLoading";
+import Button from "@mui/material/Button";
+import {MdOutlineContentCopy, MdShare} from "react-icons/md";
+import Snackbar from "@mui/material/Snackbar";
 
-import { AiFillCar } from 'react-icons/ai'
-import { BsFillSuitSpadeFill } from 'react-icons/bs'
-import { MdOutlinePersonalVideo } from 'react-icons/md'
 const Single = () => {
-  return (
-    <div id='main-wrapper'>
-      <section
-        class='gallery_parts pt-2 pb-2 d-block d-sm-block d-md-block d-lg-block d-xl-block'
-        style={{ marginTop: '100px' }}
-      >
-        <div class='container'>
-          <div class='row align-items-center'>
-            <div class='col-lg-12 col-md-12 col-sm-12 pr-1'>
-              <SingleSlider />
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class='pt-4'>
-        <div class='container'>
-          <div class='row'>
-            {/* <!-- property main detail --> */}
-            <div class='col-lg-8 col-md-12 col-sm-12 text-right mt-5'>
-              <div class='property_info_detail_wrap mb-4'>
-                <div class='property_info_detail_wrap_first text-right'>
-                  <div class='pr-price-into'>
-                    <ul class='prs_lists'>
-                      <li>
-                        <span class='bed'>3 خواب</span>
-                      </li>
-                      <li>
-                        <span class='bath'>2 حمام</span>
-                      </li>
-                      <li>
-                        <span class='gar'>1 پارکینگ</span>
-                      </li>
-                      <li>
-                        <span class='sqft'>100 متر</span>
-                      </li>
-                    </ul>
-                    <h2 className='mt-5'>خیابان گلستان 12 عظیمیه کرج</h2>
-                    <span>
-                      <i class='lni-map-marker'></i> خیابان 12
-                    </span>
-                  </div>
-                </div>
-              </div>
+    let {pathname} = useLocation();
 
-              <div class='property_block_wrap'>
-                <div class='property_block_wrap_header'>
-                  <h4 class='property_block_title'>درباره امکانات </h4>
-                </div>
+    const [ad, setAd] = useState();
+    const [mobile, setMobile] = useState();
+    const [snackBarOpen, setSnackBarOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
-                <div class='block-body'>
-                  <p>
-                    100 متر ویلایی در عظیمیه کرج با ویو بسیار عالی و دارای
-                    پارکینگ و کف پارکت و کابینت و دارای دو اتاق خواب مجهز و
-                    دارای دو سرویس بهداشتی
-                  </p>
-                </div>
-              </div>
+    const getAd = async id => {
+        const result = await RequestsUtil.getAd(id);
+        console.log(result)
+        if (result.isDone) {
+            setAd(result.data);
+        }
+    }
+    const getMobile = async () => {
+        setIsLoading(true);
+        const result = await RequestsUtil.getMobile(ad.id)
+        if (result.isDone) {
+            setMobile(result.data);
+        }
+        setIsLoading(false);
 
-              <div class='property_block_wrap'>
-                <div class='property_block_wrap_header'>
-                  <h4 class='property_block_title'>امکانات پیشرفته</h4>
-                </div>
+    }
+    const copyMobile = () => {
+        navigator.clipboard.writeText(mobile);
+        setSnackBarOpen(true);
 
-                <div class='block-body'>
-                  <ul class='row p-0 m-0'>
-                    <li class='col-lg-4 col-md-6 mb-2 p-0'>
-                      <FaBed />4 خوابه
-                    </li>
-                    <li class='col-lg-4 col-md-6 mb-2 p-0'>
-                      <FaBath />2 حمام
-                    </li>
-                    <li class='col-lg-4 col-md-6 mb-2 p-0'>
-                      <FaExpandArrowsAlt />
-                      100متر
-                    </li>
-                    <li class='col-lg-4 col-md-6 mb-2 p-0'>
-                      <FaHouseDamage />1 اتاق پذیرایی
-                    </li>
-                    <li class='col-lg-4 col-md-6 mb-2 p-0'>
-                      <FaBuilding />
-                      سال ساخت 1395
-                    </li>
-                    <li class='col-lg-4 col-md-6 mb-2 p-0'>
-                      <FaUtensils />2 اشپزخانه
-                    </li>
-                    <li class='col-lg-4 col-md-6 mb-2 p-0'>
-                      <AiFillCar />
-                      پارکینگ
-                    </li>
-                    <li class='col-lg-4 col-md-6 mb-2 p-0'>
-                      <FaBriefcaseMedical />
-                      بهداشت
-                    </li>
-                    <li class='col-lg-4 col-md-6 mb-2 p-0'>
-                      <FaFire />
-                      اتشنشانی
-                    </li>
-                    <li class='col-lg-4 col-md-6 mb-2 p-0'>
-                      <FaLayerGroup />
-                      شهری
-                    </li>
-                    <li class='col-lg-4 col-md-6 mb-2 p-0'>
-                      <MdOutlinePersonalVideo />
-                      کابل تلویزیون
-                    </li>
-                    <li class='col-lg-4 col-md-6 mb-2 p-0'>
-                      <BsFillSuitSpadeFill />
-                      فضای خالی
-                    </li>
-                  </ul>
-                </div>
-              </div>
+    }
+    useEffect(() => {
+        getAd(parseInt(pathname.split('/').pop()));
+    }, [])
 
-              <div class='property_block_wrap'>
-                <div class='property_block_wrap_header'>
-                  <h4 class='property_block_title'>امکانات رفاهی</h4>
-                </div>
 
-                <div class='block-body'>
-                  <ul class='avl-features third'>
-                    <li class='active'>کولر</li>
-                    <li class='active'>استخر</li>
-                    <li class='active'>اتاق</li>
-                    <li class='active'>باشگاه</li>
-                    <li class='active'>آلارم</li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+    const MainWidget = () => {
+        return (
+            <section
+                className='mr-lg-5 ml-lg-5 pl-lg-5 pr-lg-5 gallery_parts pt-2 pb-2 d-block d-sm-block d-md-block d-lg-block d-xl-block single-main'
+                style={{marginTop: '100px'}}
+            >
+                <div className='row align-items-center'>
+                    <div className='col-lg-6 col-md-12 col-sm-12 text-right mt-5'>
+                        <div className='property_info_detail_wrap mb-4'>
+                            <div className='property_info_detail_wrap_first text-right'>
+                                <div className='pr-price-into'>
+                                    <ul className='prs_lists'>
+                                        <li>
+                                            <span className='bath'>رهن: {number_format(ad.trust)} تومان</span>
+                                        </li>
+                                        <li>
+                                            <span className='gar'>اجاره {ad.rentType.name}</span>
+                                        </li>
+                                        <li>
+                                            <span className='sqft'>{ad.district.name}</span>
+                                        </li>
+                                    </ul>
+                                    <h2 className='mt-5 mb-1'>{ad.title}</h2>
+                                    <span className='mt-2' style={{color: 'grey', fontSize: '12px'}}>
+                                      <FaClock style={{marginLeft: '0.5em'}}/>
+                                        {ad.date} در {ad.district.name}
+                                    </span>
+                                    <div className='mt-4 row d-flex justify-content-between mr-2 ml-2'>
+                                        <Button onClick={getMobile} className='login-btn'>
+                                            {isLoading ? <Loading/> : 'اطلاعات بیشتر'}
+                                        </Button>
+                                        <MdShare style={{color: 'grey', cursor: 'pointer'}}
+                                                 className='mt-auto mb-auto '/>
+                                    </div>
+                                    <div onClick={copyMobile}
+                                         className={'mt-4 row d-flex justify-content-between mr-2 ml-2 mobile-div ' + (mobile ? ' mobile-show' : '')}>
+                                        <span style={{color: 'grey', fontSize: '14px'}}>شماره موبایل: </span>
+                                        <div>
+                                            <span className='mt-auto mb-auto'
+                                                  style={{color: '#e62222', cursor: 'pointer'}}>{mobile}</span>
+                                            <MdOutlineContentCopy style={{color: 'grey', cursor: 'pointer'}}
+                                                                  className='mt-auto mb-auto mr-2'/>
 
-            <div class='col-lg-4 col-md-12 col-sm-12'>
-              <div class='property-sidebar'>
-                {/* <!-- Mortgage Calculator --> */}
-                <div class='sider_blocks_wrap Text-right'>
-                  <div class='side-booking-header'>
-                    <h4 class='m-0'>اطلاعات رهن</h4>
-                  </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                  <div class='sider-block-body p-3'>
-                    <div class='form-group'>
-                      <div class='input-with-icon'>
-                        <input
-                          type='text'
-                          class='form-control light'
-                          placeholder='پیش'
-                        />
-                        <i class='ti-money'></i>
-                      </div>
+                        <div className='property_block_wrap'>
+                            <div className='property_block_wrap_header'>
+                                <h4 className='property_block_title'>درباره ملک </h4>
+                            </div>
+
+                            <div className='block-body'>
+                                <p>
+                                    {ad.details}
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className='property_block_wrap'>
+                            <div className='property_block_wrap_header'>
+                                <h4 className='property_block_title'>امکانات پیشرفته</h4>
+                            </div>
+
+                            <div className='block-body'>
+                                <ul className='row p-0 m-0 mt-1'>
+                                    {ad.advancedOptions.map(e => <li className='col-lg-4 col-md-6 mb-2 p-0'>
+                                        <img width='18px' src={e.icon} alt={e.name} className='ml-2'/>
+                                        <span style={{fontSize: '14px'}}>{e.name}</span>
+                                    </li>)}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div className='property_block_wrap'>
+                            <div className='property_block_wrap_header'>
+                                <h4 className='property_block_title'>امکانات رفاهی</h4>
+                            </div>
+
+                            <div className='block-body'>
+                                <ul className='row p-0 m-0 mt-1'>
+                                    {ad.welfareOptions.map(e => <li className='col-lg-4 col-md-6 mb-2 p-0'>
+                                        <img width='18px' src={e.icon} alt={e.name} className='ml-2'/>
+                                        <span style={{fontSize: '14px'}}>{e.name}</span>
+                                    </li>)}
+                                </ul>
+                            </div>
+                        </div>
+                        <div className='property_block_wrap'>
+                            <div className='property_block_wrap_header'>
+                                <h4 className='property_block_title'>امکانات عمومی</h4>
+                            </div>
+
+                            <div className='block-body'>
+                                <ul className='row p-0 m-0 mt-1'>
+                                    {
+                                        Object.values(ad.options).map(e => {
+                                            return (
+                                                <li className='col-lg-4 col-md-6 mb-2 p-0'>
+                                                    <span style={{color: 'grey', fontSize: '12px'}}>
+                                                        {e.name}:
+                                                    </span>
+                                                    <span style={{fontSize: '12px', marginRight: '0.4em'}}>
+                                                        {e.value?.name}
+                                                    </span>
+                                                </li>
+                                            );
+                                        })
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <div className='property_block_wrap'>
+                            <div className='property_block_wrap_header'>
+                                <h4 className='property_block_title'>امکانات اختصاصی</h4>
+                            </div>
+
+                            <div className='block-body'>
+                                <ul className='row p-0 m-0 mt-1'>
+                                    {
+                                        Object.values(ad.otherOptions).map(e => {
+                                            return (
+                                                <li className='col-lg-4 col-md-6 mb-2 p-0'>
+                                                    <span style={{color: 'grey', fontSize: '12px'}}>
+                                                        {e.name}:
+                                                    </span>
+                                                    <span style={{fontSize: '12px', marginRight: '0.4em'}}>
+                                                        {e.value?.name}
+                                                    </span>
+                                                </li>
+                                            );
+                                        })
+                                    }
+                                </ul>
+                            </div>
+                        </div>
                     </div>
 
-                    <div class='form-group'>
-                      <div class='input-with-icon'>
-                        <input
-                          type='text'
-                          class='form-control light'
-                          placeholder='سال'
-                        />
-                        <i class='ti-calendar'></i>
-                      </div>
+                    <div style={{height: '100vh'}} className='col-lg-6 col-md-12 col-sm-12 pr-1'>
+                        <SingleSlider ad={ad}/>
                     </div>
 
-                    <div class='form-group'>
-                      <div class='input-with-icon'>
-                        <input
-                          type='text'
-                          class='form-control light'
-                          placeholder='اجاره'
-                        />
-                        <i class='fa fa-percent'></i>
-                      </div>
-                    </div>
-
-                    <button class='btn book_btn theme-bg'>اطلاعات تماس</button>
-                  </div>
                 </div>
-              </div>
+            </section>
+        );
+    }
+    return (ad ?
+        <>
+            <div id='main-wrapper' className='mb-5' style={{direction: 'rtl'}}>
+                <MainWidget/>
             </div>
-          </div>
-        </div>
-      </section>
-    </div>
-  )
+            <Snackbar
+                message="کپی شد!"
+
+                autoHideDuration={3000}
+
+                open={snackBarOpen}
+                onClose={(event, reason) => {
+                    setSnackBarOpen(false);
+                    event.preventDefault()
+                }}
+            />
+        </> : <div id='main-wrapper' style={{direction: 'rtl'}}>
+            <section className='pt-4 h-100'>
+                <div className='container'>
+                    <Loading/>
+
+                </div>
+            </section>
+
+        </div>)
+
 }
 
 export default Single

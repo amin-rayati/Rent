@@ -6902,7 +6902,6 @@ span._RentVilla_prt_location {
 ._category_box {
   display: table;
   width: 100%;
-  margin-bottom: 40px;
   max-width: 96%;
   margin: 0 auto 40px;
 }
@@ -6917,7 +6916,7 @@ span._RentVilla_prt_location {
   padding: 2.5rem 2rem;
   transition: all ease 0.4s;
   border: 1px dashed #d3d8e3;
-  box-shadow: 0 0 0px 10px rgb(244 245 247);
+  box-shadow: 0 0 0 10px rgb(244 245 247);
 }
 ._category_box a ._category_thumb {
   margin-bottom: 7px;
@@ -6934,7 +6933,7 @@ span._RentVilla_prt_location {
 ._category_box a:focus {
   background: #27ae60;
   border: 1px dashed #27ae60;
-  box-shadow: 0 0 0px 10px rgba(39, 174, 96, 0.2);
+  box-shadow: 0 0 0 10px rgba(39, 174, 96, 0.2);
   text-decoration: none !important;
 }
 ._category_caption h5 {
@@ -6943,7 +6942,7 @@ span._RentVilla_prt_location {
 }
 ._category_box a:hover h5,
 ._category_box a:focus h5 {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 ._category_box a:hover span,
 ._category_box a:focus span {
@@ -7896,8 +7895,8 @@ span.tag_t {
   width: 100%;
   position: relative;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+  align-items: start;
+  justify-content: start;
 }
 .listing-card-info-icon {
   display: inline-block;
@@ -7907,7 +7906,7 @@ span.tag_t {
   width: 33.333333%;
   flex: 0 0 33.333333%;
   margin-bottom: 0rem;
-  font-size: 14px;
+  font-size: 10px;
   color: #616e96;
   font-weight: 600;
 }
@@ -7961,7 +7960,7 @@ span._list_blickes.types {
 .listing-card-info-price {
   font-weight: 700;
   position: relative;
-  font-size: 22px;
+  font-size: 18px;
   color: #27ae60;
   line-height: 1.4;
   padding-left: 0.35em;
@@ -8114,7 +8113,7 @@ span._list_blickes.types {
   display: flex;
   align-items: center;
   width: 100%;
-  justify-content: flex-start;
+  justify-content: flex-end;
   min-height: 60px;
   max-height: 60px;
 }
@@ -8285,9 +8284,7 @@ a._calss_tyui {
   align-items: flex-start;
 }
 .property-listing.list_view .listing-img-wrapper {
-  flex: 1;
   position: relative;
-  min-width: 250px;
 }
 .property-listing.list_view .list-img-slide .slick-dotted.slick-slider {
   margin-bottom: 0;
@@ -8302,11 +8299,10 @@ a._calss_tyui {
 .property-listing.list_view .slick-slide img,
 .property-listing.list_view .list-img-slide img {
   height: 200px;
-  width: 100%;
-  object-fit: cover;
 }
 .property-listing.list_view .list_view_flex {
   padding-left: 15px;
+  flex: 1;
 }
 .property-listing.list_view .listing-name {
   font-size: 15px;
@@ -9897,7 +9893,7 @@ ul.shorting_grid li a span {
   font-size: 13px;
 }
 .compare-slide-menu .listing-card-info-price {
-  font-size: 18px;
+  font-size: 16px;
 }
 span.remove-from-compare {
   position: absolute;
@@ -14782,7 +14778,7 @@ input.form-control.tbl_quan {
     font-size: 11px;
   }
   .listing-card-info-price {
-    font-size: 18px;
+    font-size: 16px;
   }
   .half-map .fs-inner-container {
     width: 60%;
@@ -15956,13 +15952,13 @@ input.form-control.tbl_quan {
   background-color: #1d2636 !important;
 }
 .login-btn {
-  padding: 10px !important;
   background-color: #27ae60 !important;
   color: #fff !important;
-  padding: 15px 25px 15px 25px !important;
   font-weight: bolder;
   transition: 0.6s;
-  border-radius: 13px !important;
+  border-radius: 10px !important;
+  border: none !important;
+  padding: 10px 20px;
 }
 
 .login-btn:hover {
@@ -15973,4 +15969,7 @@ input.form-control.tbl_quan {
 .dashBoard {
   background-image: url(./Assets/img/slider-5.jpg) !important;
   background-color: #f4f4f4 !important;
+}
+.sex {
+  left: 0px !important;
 }

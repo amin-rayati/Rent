@@ -77,7 +77,7 @@ const Header = () => {
     { path: '/search', text: ' اجاره ها' },
     { path: '/about', text: 'درباره ما' },
     { path: '/add', text: 'افزودن آگهی' },
-    { path: '/dasboard', text: 'داشبورد' },
+    { path: '/dashboard', text: 'داشبورد' },
     { path: '/', text: 'خروج' },
   ])
 
@@ -248,7 +248,7 @@ const Header = () => {
                 ) : (
                   <li style={{ cursor: 'pointer' }}>
                     <NavDropdown
-                      title={userData['fname'] + ' ' + userData['lame']}
+                      title={userData['firstName'] + ' ' + userData['lastName']}
                       id='collasible-nav-dropdown '
                       style={{
                         right: '0px',

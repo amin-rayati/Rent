@@ -1,36 +1,39 @@
 import { useState, useCallback, useEffect } from 'react'
-import { Modal } from 'react-bootstrap'
+import { Modal, ThemeProvider } from 'react-bootstrap'
 import { useProjectContext } from '../../Context/ProjectProvider'
+import { ImCross } from 'react-icons/im'
 import axios from 'axios'
 import Loading from '../Loading/LoginLoading'
 import Swal from 'sweetalert2'
-import { Button } from 'react-bootstrap'
+import { button } from 'react-bootstrap'
 import { Cookies, useCookies } from 'react-cookie'
 import Grow from '@mui/material/Grow'
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
+import TextField from '@mui/material/TextField'
+import { makeStyles } from '@material-ui/core/styles'
+
 const mobileUrl =
-  'https://negatrip.ir/admin/Customers/API/_startLoginRegister?token=test'
+  'https://jajore.com/admin/Customers/API/_startLoginRegister?token=test'
 
 const registerUrl =
-  'https://negatrip.ir/admin/Customers/API/_register?token=test'
+  'https://jajore.com/admin/Customers/API/_register?token=test'
 
 const Login = () => {
   const [cookies, setCookie, removeCookie] = useCookies(['user'])
   const {
-    setRegisterModal,
-    Id,
     RegisterShow,
     RegisterClose,
     registerModal,
-    buyModal,
-    buyModalClose,
+
     loginModal,
     loginModalClose,
     loginModalShow,
+
     userData,
     setUserData,
   } = useProjectContext()
-
+  const [stateId, setStateId] = useState(0)
+  const [cityId, setCityId] = useState(0)
+  const [isRegister, setIsRegister] = useState(true)
   const handleCookie = (infoObject) => {
     setUserData(infoObject)
     setCookie(
@@ -43,17 +46,65 @@ const Login = () => {
       }
     )
   }
+  const [state, setState] = useState('')
+  const [city, setCity] = useState('')
+
+  const getState = async () => {
+    try {
+      const rawResponse = await fetch(
+        'https://jajore.com/admin/States/API/_all?token=test',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            token: 'test',
+          },
+        }
+      )
+      const content = await rawResponse.json()
+      if (content.isDone) {
+        setState(content.data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const handleStateChange = (e) => {
+    getCityByState(e.target.value)
+    setStateId(e.target.value)
+  }
+  const getCityByState = async (id) => {
+    try {
+      const rawResponse = await fetch(
+        'https://jajore.com/admin/Cities/API/_allByState?token=test',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            token: 'test',
+          },
+          body: JSON.stringify({
+            stateId: id,
+          }),
+        }
+      )
+      const content = await rawResponse.json()
+      if (content.isDone) {
+        setCity(content.data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const [phone, setPhone] = useState('')
   const [code, setCode] = useState('')
   const [newpass1, setnewpass1] = useState('')
   const [name, setName] = useState('')
   const [lastName, setLastName] = useState('')
-  const [Referer, setReferer] = useState('')
-  const [name1, setName1] = useState()
-  const [lastName1, setLastName1] = useState()
-  const [password, setPassword] = useState('')
   const [gender, setGender] = useState('')
+  const [company, setCompany] = useState('')
+  const [title, setTitle] = useState('')
 
   const [seconds, setSeconds] = useState(30)
   const [isCodeSent, setIsCodeSent] = useState(false)
@@ -70,13 +121,12 @@ const Login = () => {
   const [btncode1, setbtncode1] = useState(false)
   const [setnewpass, setsetnewpass] = useState(false)
   const [btnnewpass, setbtnnewpass] = useState(false)
-  const [showPass, setShowPass] = useState(false)
 
-  const showPassWord = () => {
-    setShowPass(true)
+  const handleCompanyChange = (e) => {
+    setCompany(e.target.value)
   }
-  const hidePassWord = () => {
-    setShowPass(false)
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value)
   }
   const handlePhoneChange = (e) => {
     setPhone(e.target.value)
@@ -87,18 +137,13 @@ const Login = () => {
   const handleCodeChange = (e) => {
     setCode(e.target.value)
   }
-  const handleNameChange = (e) => {
+  const handleFnameChange = (e) => {
     setName(e.target.value)
   }
   const handleLnameChange = (e) => {
     setLastName(e.target.value)
   }
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value)
-  }
-  const handleLRefererChange = (e) => {
-    setReferer(e.target.value)
-  }
+
   const handleGenderChange = (e) => {
     setGender(e.target.value)
   }
@@ -126,6 +171,7 @@ const Login = () => {
       }, 4000)
     }
   }, [seconds])
+
   const foregtpass = (e) => {
     e.preventDefault()
     setBtnLogin(false)
@@ -139,7 +185,7 @@ const Login = () => {
 
     axios
       .post(
-        'https://negatrip.ir/admin/Customers/API/_forgetPassword?token=test',
+        'https://jajore.com/admin/Customers/API/_forgetPassword?token=test',
         {
           mobile: phone,
         },
@@ -170,7 +216,7 @@ const Login = () => {
 
     axios
       .post(
-        'https://negatrip.ir/admin/Customers/API/_forgetPassword?token=test',
+        'https://jajore.com/admin/Customers/API/_forgetPassword?token=test',
         {
           mobile: phone,
         },
@@ -184,7 +230,7 @@ const Login = () => {
         if (response.status === 200) {
           Swal.fire({
             icon: 'success',
-            text: 'کدتایید ارسال شد',
+            text: 'کد تایید ارسال شد',
             confirmButtonText: 'فهمیدم',
           })
         } else {
@@ -214,7 +260,7 @@ const Login = () => {
     } else {
       axios
         .post(
-          'https://negatrip.ir/admin/Customers/API/_codeValidate?token=test',
+          'https://jajore.com/admin/Customers/API/_codeValidate?token=test',
           {
             mobile: phone,
             code: code,
@@ -231,7 +277,6 @@ const Login = () => {
             Swal.fire({
               icon: 'success',
               text: 'کد درست است ',
-              confirmButtonText: 'فهمیدم',
             })
             setCountdown(false)
             setinputcode1(false)
@@ -242,9 +287,9 @@ const Login = () => {
             // getIndividualInfo(e)
             // setLoading(false)
             // Swal.fire({
-            //   icon: 'success',
+            //   type: 'success',
             //   text: 'به نگانون خوش آمدید',
-            //   confirmButtonText: 'فهمیدم',
+            //  confirmButtonText: 'فهمیدم',
             // })
             // loginModalClose()
             // setLoading(false)
@@ -284,7 +329,7 @@ const Login = () => {
     } else {
       axios
         .post(
-          'https://negatrip.ir/admin/Customers/API/_setPassword?token=test',
+          'https://jajore.com/admin/Customers/API/_setPassword?token=test',
           {
             mobile: phone,
             password: newpass1,
@@ -301,13 +346,11 @@ const Login = () => {
             getIndividualInfo(e)
             Swal.fire({
               icon: 'success',
-              text: ' به نگاتور خوش آمدید, رمز جدید با موفقیت ثبت شد',
+              text: ' به جاجوره خوش آمدید, رمز جدید با موفقیت ثبت شد',
               confirmButtonText: 'فهمیدم',
-              preConfirm: () => {
-                loginModalClose()
-              },
             })
             getIndividualInfo(e)
+            loginModalClose()
           }
 
           setLoading(false)
@@ -341,18 +384,12 @@ const Login = () => {
       )
       .then((response) => {
         if (response.data.isDone) {
-          if (response.data.data['status'] == '1') {
-            setBtn(false)
-            setBtnLogin(true)
-            setIsPass(true)
-            setbtnsetpass(true)
-          } else {
-            handleCountDown()
-            setCountdown(true)
-            setBtn(false)
-            setBtnRegister(true)
-            setIsCodeSent(true)
-          }
+          setIsRegister(response.data.data['status'] == '0')
+          handleCountDown()
+          setCountdown(true)
+          setBtn(false)
+          setBtnRegister(true)
+          setIsCodeSent(true)
         } else {
           Swal.fire({
             icon: 'error',
@@ -379,8 +416,8 @@ const Login = () => {
         icon: 'error',
         text: 'تمام فیلد ها پر شود',
         confirmButtonText: 'فهمیدم',
-        showConfirmButton: false,
-        showCloseButton: true,
+        showConfirmbutton: false,
+        showClosebutton: true,
         onAfterClose: () => {
           setLoading(false)
         },
@@ -388,7 +425,7 @@ const Login = () => {
     } else {
       axios
         .post(
-          'https://negatrip.ir/admin/Customers/API/_codeValidate?token=test',
+          'https://jajore.com/admin/Customers/API/_codeValidate?token=test',
           {
             mobile: phone,
             code: code,
@@ -406,7 +443,20 @@ const Login = () => {
 
             if (response.data.isDone === true) {
               // buyModalClose()
-              RegisterShow()
+              if (isRegister) {
+                RegisterShow()
+              } else {
+                Swal.fire({
+                  icon: 'success',
+                  text: 'به جاجوره خوش آمدید',
+                  confirmButtonText: 'فهمیدم',
+                })
+                getIndividualInfo(e)
+                setIsCodeSent(true)
+                setLoading(false)
+                RegisterClose()
+                loginModalClose()
+              }
             } else {
               Swal.fire({
                 icon: 'error',
@@ -436,7 +486,8 @@ const Login = () => {
   const Register = (e) => {
     e.preventDefault()
     setLoading(true)
-    if (name === '' || lastName === '' || password === '') {
+
+    if (name === '' || lastName === '' || gender === '') {
       Swal.fire({
         icon: 'error',
         text: 'تمام فیلد ها پر شود',
@@ -450,13 +501,13 @@ const Login = () => {
         .post(
           registerUrl,
           {
-            fname: name,
-            lname: lastName,
+            firstName: name,
+            lastName: lastName,
             mobile: phone,
-            // referrer: Referer,
-            // gender: gender,
-            password: password,
-            // code: code,
+            gender: gender,
+
+            stateId: stateId,
+            cityId: cityId,
           },
           {
             headers: {
@@ -465,10 +516,11 @@ const Login = () => {
           }
         )
         .then((response) => {
+          console.log(response)
           if (response.data.isDone) {
             Swal.fire({
               icon: 'success',
-              text: 'به نگاتور خوش آمدید',
+              text: 'به جاجوره خوش آمدید',
               confirmButtonText: 'فهمیدم',
             })
             getIndividualInfo(e)
@@ -476,12 +528,6 @@ const Login = () => {
             setLoading(false)
             RegisterClose()
             loginModalClose()
-          } else {
-            Swal.fire({
-              icon: 'error',
-              text: 'کد معرف نامعتبر',
-              confirmButtonText: 'فهمیدم',
-            })
           }
           setLoading(false)
         })
@@ -510,10 +556,10 @@ const Login = () => {
     } else {
       axios
         .post(
-          'https://negatrip.ir/admin/Customers/API/_login?token=test',
+          'https://jajore.com/admin/Customers/API/_login?token=test',
           {
             mobile: phone,
-            password: code,
+            code: code,
           },
           {
             headers: {
@@ -529,19 +575,12 @@ const Login = () => {
             setLoading(false)
             Swal.fire({
               icon: 'success',
-              text: 'به نگاتور خوش آمدید',
+              text: 'به جاجوره خوش آمدید',
               confirmButtonText: 'فهمیدم',
-              preConfirm: () => {
-                loginModalClose()
-                setLoading(false)
-              },
               onAfterClose: () => {
                 loginModalClose()
                 setLoading(false)
               },
-              // onClose: () => {
-
-              // },
             })
           } else {
             Swal.fire({
@@ -565,7 +604,7 @@ const Login = () => {
     e.preventDefault()
     axios
       .post(
-        'https://negatrip.ir/admin/Customers/API/_getCustomerInfo?token=test',
+        'https://jajore.com/admin/Customers/API/_getCustomerInfo?token=test',
         {
           mobile: phone,
         },
@@ -593,48 +632,44 @@ const Login = () => {
       const timerID = setInterval(() => handleCountDown(), 1000)
       return () => clearInterval(timerID)
     }
+    getState()
   }, [handleCountDown, isCodeSent, inputcode1])
 
+  useEffect(() => {
+    getState()
+  }, [registerModal])
+
+  const handleCityChange = (e) => {
+    setCityId(e.target.value)
+  }
   return (
     <>
-      <Modal show={loginModal} onHide={loginModalClose} centered>
-        <Modal.Header style={{ justifyContent: 'center', border: 'none' }}>
-          <Modal.Title
-            style={{ fontWeight: 'bolder', textAlign: 'center', width: '100%' }}
-          >
-            <div
-              style={{
-                background: '#27ae60',
-                borderRadius: '14px',
-                color: 'white',
-                padding: '15px',
-              }}
-            >
-              ورود و ثبت نام
-            </div>
+      <Modal show={loginModal} onHide={loginModalClose} size={'lg'}>
+        <Modal.Header style={{ justifyContent: 'center' }}>
+          <Modal.Title style={{ fontWeight: 'bolder', borderBottom: 'none' }}>
+            ورود
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+
+        <Modal.Body style={{ width: '50%', margin: 'auto' }}>
           <Grow
             in={loginModal}
             timeout={500}
             style={{ transformOrigin: '0 0 0' }}
           >
-            <div className='row mx-0 mt-2' style={{ justifyContent: 'right' }}>
-              <h5 style={{ textAlign: 'right', fontWeight: 'bolder' }}>
-                شماره موبایل خود را وارد کنید
-              </h5>
+            <div className='row mx-0 mt-2' style={{ justifyContent: 'center' }}>
               <input
                 onChange={handlePhoneChange}
                 onKeyDown={handleKeyDownSendMobile}
                 value={phone}
                 required
-                className=' select mt-3'
+                className=' select'
                 pattern='[0-9]{5}[-][0-9]{7}[-][0-9]{1}'
-                icon='text'
+                type='text'
                 title='Ten digits code'
+                placeHolder='09** *** ** **'
                 style={{
-                  textAlign: 'right',
+                  textAlign: 'left',
                   borderRadius: '0.45rem',
                   border: '1px solid #0000004f',
                   height: '40px',
@@ -654,28 +689,26 @@ const Login = () => {
                 style={{ transformOrigin: '0 0 0' }}
               >
                 <div
-                  className='row mx-0 mt-4'
-                  style={{ justifyContent: 'right' }}
+                  className='row mx-0 mt-5'
+                  style={{ justifyContent: 'center' }}
                 >
-                  <h5 style={{ textAlign: 'inherit', fontWeight: 'bolder' }}>
-                    کد تایید را وارد کنید
-                  </h5>
                   <input
                     onChange={handleCodeChange}
                     onKeyDown={handleKeyDownSendCode}
                     value={code}
                     required
                     className=' select'
-                    icon='text'
+                    type='text'
                     title='Ten digits code'
+                    placeHolder='کد تایید'
                     style={{
+                      textAlign: 'right',
                       borderRadius: '0.45rem',
                       border: '1px solid #0000004f',
                       height: '40px',
                       width: '100%',
                       outline: 'none',
                       background: 'white',
-                      textAlign: 'right',
                     }}
                   />
                 </div>
@@ -691,55 +724,28 @@ const Login = () => {
                 style={{ transformOrigin: '0 0 0' }}
               >
                 <div
-                  className='row mx-0 mt-4'
-                  style={{ justifyContent: 'right' }}
+                  className='row mx-0 mt-5'
+                  style={{ justifyContent: 'center' }}
                 >
-                  <h5 style={{ textAlign: 'inherit', fontWeight: 'bolder' }}>
-                    رمز خود را وارد کنید
-                  </h5>
                   <input
                     onChange={handleCodeChange}
                     onKeyDown={handleKeyDownSendPass}
                     value={code}
                     required
                     className=' select'
-                    icon={!showPass ? 'password' : 'text'}
+                    type='password'
                     title='Ten digits code'
+                    placeHolder='رمز عبور'
                     style={{
+                      textAlign: 'left',
                       borderRadius: '0.45rem',
                       border: '1px solid #0000004f',
                       height: '40px',
                       outline: 'none',
                       width: '100%',
                       background: 'white',
-                      textAlign: 'right',
                     }}
                   />
-                  {!showPass ? (
-                    <AiFillEye
-                      onClick={() => showPassWord()}
-                      size={25}
-                      style={{
-                        color: 'black',
-                        position: 'relative',
-                        bottom: '30px',
-                        right: '44%',
-                        cursor: 'pointer',
-                      }}
-                    />
-                  ) : (
-                    <AiFillEyeInvisible
-                      size={25}
-                      onClick={() => hidePassWord()}
-                      style={{
-                        color: 'black',
-                        position: 'relative',
-                        bottom: '30px',
-                        right: '44%',
-                        cursor: 'pointer',
-                      }}
-                    />
-                  )}
                 </div>
               </Grow>
             </>
@@ -753,20 +759,18 @@ const Login = () => {
                 style={{ transformOrigin: '0 0 0' }}
               >
                 <div
-                  className='row mx-0 mt-4'
-                  style={{ justifyContent: 'right' }}
+                  className='row mx-0 mt-5'
+                  style={{ justifyContent: 'center' }}
                 >
-                  <h5 style={{ textAlign: 'inherit', fontWeight: 'bolder' }}>
-                    کد تایید را وارد کنید
-                  </h5>
                   <input
                     onChange={handleCodeChange}
                     onKeyDown={handleKeyDownSendCode1}
                     value={code}
                     required
                     className=' select'
-                    icon='text'
+                    type='text'
                     title='Ten digits code'
+                    placeHolder='کد تایید'
                     style={{
                       borderRadius: '0.45rem',
                       border: '1px solid #0000004f',
@@ -790,20 +794,18 @@ const Login = () => {
                 style={{ transformOrigin: '0 0 0' }}
               >
                 <div
-                  className='row mx-0 mt-4'
-                  style={{ justifyContent: 'right' }}
+                  className='row mx-0 mt-5'
+                  style={{ justifyContent: 'center' }}
                 >
-                  <h5 style={{ textAlign: 'inherit', fontWeight: 'bolder' }}>
-                    رمز عبور جدید را وارد کنید
-                  </h5>
                   <input
                     onChange={handleNewPassChange}
                     onKeyDown={handleKeyDownSetNewpassword}
                     value={newpass1}
                     required
                     className=' select'
-                    icon={!showPass ? 'password' : 'text'}
+                    type='password'
                     title='Ten digits code'
+                    placeHolder='رمز عبور جدید'
                     style={{
                       borderRadius: '0.45rem',
                       border: '1px solid #0000004f',
@@ -811,34 +813,9 @@ const Login = () => {
                       width: '100%',
                       outline: 'none',
                       background: 'white',
-                      textAlign: 'right',
+                      textAlign: 'left',
                     }}
                   />
-                  {!showPass ? (
-                    <AiFillEye
-                      onClick={() => showPassWord()}
-                      size={25}
-                      style={{
-                        color: 'black',
-                        position: 'relative',
-                        bottom: '30px',
-                        right: '44%',
-                        cursor: 'pointer',
-                      }}
-                    />
-                  ) : (
-                    <AiFillEyeInvisible
-                      size={25}
-                      onClick={() => hidePassWord()}
-                      style={{
-                        color: 'black',
-                        position: 'relative',
-                        bottom: '30px',
-                        right: '44%',
-                        cursor: 'pointer',
-                      }}
-                    />
-                  )}
                 </div>
               </Grow>
             </>
@@ -846,13 +823,13 @@ const Login = () => {
 
           <div className='d-flex justify-content-between mt-4'>
             {resendcode ? (
-              <Button
+              <button
                 variant=' my-3 mr-3 '
-                className='login-btn '
+                className='login-btn'
                 onClick={resendCode}
               >
                 {!loading1 ? 'ارسال مجدد کد' : <Loading />}
-              </Button>
+              </button>
             ) : null}
             {coundown ? (
               <p className='text-left mt-auto'>
@@ -865,15 +842,15 @@ const Login = () => {
             ) : null}
           </div>
 
-          <div className='d-flex justify-content-between mt-1'>
+          <div className='d-flex justify-content-between mt-4'>
             {btnsetpass ? (
-              <Button
+              <button
                 variant=' my-3 mr-3 '
                 className='login-btn'
                 onClick={foregtpass}
               >
                 فراموشی رمز
-              </Button>
+              </button>
             ) : null}
             {/* {coundown ? (
               <p className='text-left mt-auto'>
@@ -886,169 +863,308 @@ const Login = () => {
             ) : null} */}
           </div>
         </Modal.Body>
-        <Modal.Footer
-          style={{ border: 'none' }}
-          className='justify-content-center'
-        >
+        <Modal.Footer className='justify-content-center'>
           {btn ? (
-            <Button
+            <button
               variant=' my-3 mr-3 '
-              className='login-btn  hover-item '
+              className='login-btn px-3 hover-item p-2'
               onClick={sendMobile}
             >
-              {!loading ? 'ورود/ثبت نام' : <Loading />}
-            </Button>
+              {!loading ? 'بررسی موبایل' : <Loading />}
+            </button>
           ) : null}
 
           {btnRegister ? (
-            <Button
+            <button
               variant=' my-3 mr-3 '
-              className='login-btn  hover-item '
+              className='login-btn px-3 hover-item p-2'
               onClick={sendCode}
             >
-              {!loading ? 'ورود/ثبت نام' : <Loading />}
-            </Button>
+              {!loading ? 'ارسال کد' : <Loading />}
+            </button>
           ) : null}
 
           {btnLogin ? (
-            <Button
+            <button
               variant=' my-3 mr-3 '
-              className='login-btn  hover-item '
+              className='login-btn px-3 hover-item p-2'
               onClick={sendPass}
             >
-              {!loading ? 'ورود/ثبت نام' : <Loading />}
-            </Button>
+              {!loading ? 'تایید کد' : <Loading />}
+            </button>
           ) : null}
           {btncode1 ? (
-            <Button
+            <button
               variant=' my-3 mr-3 '
-              className='login-btn  hover-item '
+              className='login-btn px-3 hover-item p-2'
               onClick={sendCode1}
             >
               {!loading ? 'ورود/ثبت نام' : <Loading />}
-            </Button>
+            </button>
           ) : null}
 
           {btnnewpass ? (
-            <Button
+            <button
               variant=' my-3 mr-3 '
-              className='login-btn  hover-item '
+              className='login-btn px-3 hover-item p-2'
               onClick={setNewpassword}
             >
               {!loading ? 'ورود/ثبت نام' : <Loading />}
-            </Button>
+            </button>
           ) : null}
         </Modal.Footer>
       </Modal>
-      <Modal show={registerModal} onHide={RegisterClose} centered>
-        <Modal.Header style={{ justifyContent: 'center', border: 'none' }}>
-          <Modal.Title
-            style={{ fontWeight: 'bolder', textAlign: 'center', width: '100%' }}
-          >
-            <div
-              style={{
-                background: '#27ae60',
-                borderRadius: '14px',
-                color: 'white',
-                padding: '15px',
-              }}
-            >
-              ورود و ثبت نام
-            </div>
+      <Modal show={registerModal} onHide={RegisterClose} size={'lg'}>
+        <Modal.Header style={{ justifyContent: 'center' }}>
+          <Modal.Title style={{ fontWeight: 'bolder', borderBottom: 'none' }}>
+            ثبت نام
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body
-          style={{ direction: 'rtl', textAlign: 'right', height: '300px' }}
-        >
+
+        <Modal.Body style={{ direction: 'rtl', textAlign: 'right' }}>
           <Grow
             in={registerModal}
             timeout={500}
             style={{ transformOrigin: '0 0 0' }}
           >
             <div className='row mx-0 '>
-              <input
-                onChange={handleNameChange}
-                value={name}
-                required
-                className='col-9 mt-3'
-                id='name'
-                icon='text'
-                placeHolder='نام'
-                style={{
-                  borderRadius: '0.45rem',
-                  border: '1px solid #0000004f',
-                  height: '40px',
-                  width: '100%',
-                  outline: 'none',
-                  background: 'white',
-                }}
-              />
-            </div>
-          </Grow>
+              <div className='col-lg-6 col-md-5 col-sm-10 col-10'>
+                <label for='name' style={{ direction: 'ltr', width: '35%' }}>
+                  {' '}
+                  : نام
+                </label>
+                <input
+                  onChange={handleFnameChange}
+                  value={name}
+                  required
+                  className='col-9 mt-3 mx-1'
+                  id='name'
+                  type='text'
+                  placeHolder='نام   '
+                  style={{
+                    borderRadius: '0.45rem',
+                    border: '1px solid #0000004f',
+                    height: '40px',
+                    width: '55%',
+                    outline: 'none',
+                    background: 'white',
+                    padding: '10px',
+                  }}
+                />
+              </div>
 
-          <Grow
-            in={registerModal}
-            timeout={700}
-            style={{ transformOrigin: '0 0 0' }}
-          >
-            <div className='row mx-0 mt-2'>
-              <input
-                onChange={handleLnameChange}
-                value={lastName}
-                required
-                className='col-9 mt-3'
-                id='lastname'
-                icon='text'
-                placeHolder='نام خانوادگی'
-                style={{
-                  borderRadius: '0.45rem',
-                  border: '1px solid #0000004f',
-                  height: '40px',
-                  width: '100%',
-                  outline: 'none',
-                  background: 'white',
-                }}
-              />
-            </div>
-          </Grow>
+              <div className='col-lg-6 col-md-5 col-sm-10 col-10'>
+                <label for='name' style={{ direction: 'ltr', width: '35%' }}>
+                  {' '}
+                  : نام خانوادگی
+                </label>
+                <input
+                  onChange={handleLnameChange}
+                  value={lastName}
+                  required
+                  className='col-9 mt-3 mx-1'
+                  id='name'
+                  type='text'
+                  placeHolder='  نام خانوادگی'
+                  style={{
+                    borderRadius: '0.45rem',
+                    border: '1px solid #0000004f',
+                    height: '40px',
+                    width: '55%',
+                    outline: 'none',
+                    background: 'white',
+                    padding: '10px',
+                  }}
+                />
+              </div>
 
-          <Grow
-            in={registerModal}
-            timeout={900}
-            style={{ transformOrigin: '0 0 0' }}
-          >
-            <div className='row mx-0 mt-2'>
-              <input
-                onChange={handlePasswordChange}
-                value={password}
-                required
-                className='col-9 mt-3'
-                id='lastname'
-                icon='text'
-                placeHolder='رمز عبور'
-                style={{
-                  borderRadius: '0.45rem',
-                  border: '1px solid #0000004f',
-                  height: '40px',
-                  width: '100%',
-                  outline: 'none',
-                  background: 'white',
-                }}
-              />
+              {/* <div className='col-lg-6 col-md-5 col-sm-10 col-10'>
+                <label for='names' style={{ direction: 'rtl', width: '35%' }}>
+                  {' '}
+                  نام سازمان یا شرکت :
+                </label>
+                <input
+                  onChange={handleCompanyChange}
+                  value={company}
+                  required
+                  className='col-9 mt-3 mx-1'
+                  id='names'
+                  type='text'
+                  placeHolder='  نام سازمان یا شرکت '
+                  style={{
+                    borderRadius: '0.45rem',
+                    border: '1px solid #0000004f',
+                    height: '40px',
+                    width: '55%',
+                    outline: 'none',
+                    background: 'white',
+                    padding: '10px',
+                  }}
+                />
+              </div>
+
+              <div className='col-lg-6 col-md-5 col-sm-10 col-10'>
+                <label
+                  for='nameSemat'
+                  style={{ direction: 'rtl', width: '35%' }}
+                >
+                  {' '}
+                  سمت شما :
+                </label>
+                <input
+                  onChange={handleTitleChange}
+                  value={title}
+                  required
+                  className='col-9 mt-3 mx-1'
+                  id='nameSemat'
+                  type='text'
+                  placeHolder=' سمت شما '
+                  style={{
+                    borderRadius: '0.45rem',
+                    border: '1px solid #0000004f',
+                    height: '40px',
+                    width: '55%',
+                    outline: 'none',
+                    background: 'white',
+                    padding: '10px',
+                  }}
+                />
+              </div> */}
+
+              {/* <div className='col-lg-6 col-md-5 col-sm-10 col-10'>
+                <label
+                  htmlFor='email'
+                  style={{ direction: 'rtl', width: '35%' }}
+                >
+                  استان :
+                </label>
+
+                <select
+                  onChange={handleStateChange}
+                  id='state'
+                  required
+                  name='stateId'
+                  className='col-lg-8 col-md-12 col-sm-12 col-12 mt-3 mx-1 '
+                  type='text'
+                  placeHolder=''
+                  style={{
+                    borderRadius: '0.45rem',
+                    border: '1px solid #0000004f',
+                    height: '45px',
+                    width: '55%',
+                    outline: 'none',
+                    background: 'white',
+                    padding: '10px',
+                  }}
+                >
+                  <option key='0' value='0' disabled selected>
+                    استان خود را انتخاب کنید
+                  </option>
+                  {state &&
+                    state.map((e) => {
+                      return (
+                        <option key={e.id} value={e.id}>
+                          {e.name}
+                        </option>
+                      )
+                    })}
+                </select>
+              </div>
+
+              <div className='col-lg-6 col-md-5 col-sm-10 col-10'>
+                <label
+                  htmlFor='email'
+                  style={{ direction: 'rtl', width: '35%' }}
+                >
+                  {' '}
+                  شهر :
+                </label>
+                <select
+                  id='city'
+                  onChange={handleCityChange}
+                  required
+                  className='col-lg-8 col-md-12 col-sm-12 col-12 mt-3 mx-1'
+                  type='text'
+                  placeHolder=''
+                  style={{
+                    borderRadius: '0.45rem',
+                    border: '1px solid #0000004f',
+                    height: '45px',
+                    width: '55%',
+                    outline: 'none',
+                    background: 'white',
+                    padding: '10px',
+                  }}
+                >
+                  <option key='0' value='0' disabled selected>
+                    شهر خود را انتخاب کنید
+                  </option>
+                  {city &&
+                    city.map((e) => {
+                      return (
+                        <option key={e.id} value={e.id}>
+                          {e.name}
+                        </option>
+                      )
+                    })}
+                </select>
+              </div> */}
+
+              <div
+                className='col-12 my-3  text-right'
+                style={{ textAlign: 'right' }}
+              >
+                <label>جنسیت :</label>
+              </div>
+              <div className='row col-3 col-lg-9 col-md-8 col-sm-8  '>
+                <div className='col-2 col-lg-2 col-md-2 col-sm-2 text-right'>
+                  <label
+                    className='fontsize-sm '
+                    style={{ marginLeft: '15px' }}
+                  >
+                    خانم
+                  </label>
+                  <input
+                    onChange={handleGenderChange}
+                    value={gender}
+                    required
+                    type='radio'
+                    name='sex'
+                    className='sex text-start'
+                    value='2'
+                    style={{ textAlign: 'end' }}
+                  />
+                </div>
+                <div className='col-2 col-lg-2 col-md-2 col-sm-2 text-right'>
+                  <label
+                    className='fontsize-sm '
+                    style={{ marginLeft: '15px' }}
+                  >
+                    اقا
+                  </label>
+                  <input
+                    onChange={handleGenderChange}
+                    value={gender}
+                    required
+                    type='radio'
+                    name='sex'
+                    className='sex text-start'
+                    value='1'
+                    style={{ textAlign: 'end' }}
+                  />
+                </div>
+              </div>
             </div>
           </Grow>
         </Modal.Body>
-        <Modal.Footer
-          className='justify-content-center'
-          style={{ border: 'none' }}
-        >
-          <Button
+        <Modal.Footer className='justify-content-center my-4'>
+          <button
             variant=' my-3 mr-3 '
             className='login-btn'
             onClick={Register}
           >
-            {!loading ? 'ورود/ثبت نام' : <Loading />}
-          </Button>
+            {!loading ? 'تکمیل ثبت نام' : <Loading />}
+          </button>
         </Modal.Footer>
       </Modal>
     </>
